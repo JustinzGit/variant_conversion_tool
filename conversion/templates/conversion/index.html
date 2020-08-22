@@ -1,0 +1,23 @@
+{% extends "conversion/layout.html" %}
+
+{% block body %}
+    <div>
+        <h3>Variant Annotation Tool (VAT)</h3>
+        <p>The VAT is a tool for scientists who wish to easily convert mutation coordinates to their 
+            respective coding or protein variant.</p>
+        <!-- <ul>
+            <li>Annotation tab provides coding and protein coordinate conversions.</li>
+            <li>Genomic coordinates from assembly hg38 are also determined after form submission.</li>
+            <li>Nucleotide changes in gnomAD variant ID reflect the genomic change via the positive strand.</li>
+            <li>gnomAD version 3, mapped to GRCh38, is used to query variants.</li>
+        </ul> -->
+    
+        <b>Specifications:</b>
+        <ol>
+            <li>Provide the official gene name.</li>
+            <li>Input a cDNA text file that begins with a start codon and ends with a stop codon.
+            <ul><li>Alternatively, the nucelotide sequence can be pasted into the provided text box.</li></ul></li>
+            <li>Input either coding or protein variant to obtain conversion coordinates.</li>
+        </ol>
+    </div>
+{% endblock %}
