@@ -20,4 +20,54 @@
             <li>Input either coding or protein variant to obtain conversion coordinates.</li>
         </ol>
     </div>
+
+    <div>
+        <form action="" method="" enctype="multipart/form-data">
+            <p>Gene Name: <input type="text" name="gene_name" placeholder="Gene Name"></p>
+            
+            <p>cDNA File: <input name="cdna_file" type="file"></p>
+
+            <p>cDNA Text: <textarea name="cdna_text" rows="1.5"></textarea></p>
+
+            <div id="aa_input">
+
+                <!-- WT amnio acid input -->
+                <p>WT AA <input type="text" name="wt_aa"></p>
+
+                <!-- AA location -->
+                <p>Protein Variant <input type="number" name="aa_location" placeholder="Amino Acid Position"></p>
+
+                <!-- MT amino acid input -->
+                <p>MT AA <input type="text" name="mt_aa"></p>
+
+                <button type="submit">Get Coding Coordinate</button>
+            </div>
+
+            <div id="nt_input">
+
+                <!-- WT nucleotide input -->
+                <p>WT</p>
+                <select name="wt_nt">
+                    <option selected value="A">A</option>
+                    <option value="C">C</option>
+                    <option value="T">T</option>
+                    <option value="G">G</option>
+                </select>
+                
+                <!-- Nucleotide location -->
+                <p>Coding Variant <input type="number" name="nt_location" placeholder="Coding Position"></p>
+
+                <!-- MT nucleotide input -->
+                <p>MT</p>
+                <select name="mt_nt">
+                    <option selected value="A">A</option>
+                    <option value="C">C</option>
+                    <option value="T">T</option>
+                    <option value="G">G</option>
+                </select>
+
+                <button type="submit">Get Protein Coordinate</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}
