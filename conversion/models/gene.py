@@ -93,7 +93,7 @@ class Gene(models.Model):
         """
 
         # Obtain codons of MT amino acid
-        mt_codons = aa_table[mt_aa]
+        mt_codons = cls.aa_table[mt_aa]
 
         # List to store codons of mutant amino acid
         mut_codon_list = []
@@ -125,7 +125,7 @@ class Gene(models.Model):
         """
         Return potential coding variants as result of protein change 
         """
-        
+
         # Convert position to integer
         aa_location = int(aa_location)
 
