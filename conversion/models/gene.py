@@ -23,6 +23,30 @@ class Gene(models.Model):
         'TAC':'Y', 'TAT':'Y', 'TAA':'_', 'TAG':'_',
         'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W',
         }
+
+    aa_table = {
+        'M': ['ATG'],
+        'W': ['TGG'],
+        'N': ['AAC', 'AAT'],
+        'K': ['AAA', 'AAG'],
+        'H': ['CAC', 'CAT'],
+        'Q': ['CAA', 'CAG'],
+        'D': ['GAC', 'GAT'],
+        'E': ['GAA', 'GAG'],
+        'F': ['TTC', 'TTT'],
+        'Y': ['TAC', 'TAT'],
+        'C': ['TGC', 'TGT'],
+        'I': ['ATA', 'ATC', 'ATT'],
+        '_': ['TAA', 'TAG', 'TGA'],
+        'T': ['ACA', 'ACC', 'ACG', 'ACT'],
+        'G': ['GGA', 'GGC', 'GGG', 'GGT'],
+        'V': ['GTA', 'GTC', 'GTG', 'GTT'],
+        'A': ['GCA', 'GCC', 'GCG', 'GCT'],
+        'P': ['CCA', 'CCC', 'CCG', 'CCT'],
+        'S': ['AGC', 'AGT','TCA', 'TCC', 'TCG', 'TCT'],
+        'L': ['CTA', 'CTC', 'CTG', 'CTT', 'TTA', 'TTG'],
+        'R': ['CGA', 'CGC', 'CGG', 'CGT', 'AGA', 'AGG']
+    }
         
     def codon_seq(self):
         """
@@ -62,11 +86,33 @@ class Gene(models.Model):
         table = Gene.codon_table
         return f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
 
-    def coding_variant(self, wt_nt, nt_location, mt_nt):
-        """
-        Return coding variant as result of protein change 
-        """
-        return f"c.{nt_location} {wt_nt}/{mt_nt}"
+
+    # def coding_variant(self, wt_aa, aa_location, mt_aa):
+    #     """
+    #     Return coding variant as result of protein change 
+    #     """
+
+    #     # Obtain WT codon
+    #     codon_seq = self.codon_seq()
+    #     wt_codon = "".join(codon_seq[aa_location - 1])
+
+    #     # Obtain list of codons that give rise to MT amino acid via a SNV
+    #     mt_codon_list = mutant_codon_list(wt_codon, mt_aa)
+
+    #         # Define list to hold index locations of nucleotide changes between WT/M codon
+    #         # List holds [index location, MT codon]
+    #         mutation_index = []
+
+    #         # Iterate over codons in mutant codon list
+    #         for mt_codon in mt_codon_list:
+    #             index = 0
+
+    #             # Determine codon index position where nucleotide changes occur
+    #             for i,j in zip(wt_codon, mt_codon):
+    #                 if i !=j:
+    #                     mutation_index.append([index, mt_codon])
+    #                 else:
+    #                     index += 1
 
     
 
