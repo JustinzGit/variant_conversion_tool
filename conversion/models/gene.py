@@ -121,32 +121,47 @@ class Gene(models.Model):
         return mut_codon_list
 
 
-    # def coding_variant(self, wt_aa, aa_location, mt_aa):
-    #     """
-    #     Return coding variant as result of protein change 
-    #     """
+    def coding_variants(self, wt_aa, aa_location, mt_aa):
+        """
+        Return potential coding variants as result of protein change 
+        """
 
-    #     # Obtain WT codon
-    #     codon_seq = self.codon_seq()
-    #     wt_codon = "".join(codon_seq[aa_location - 1])
+        # Obtain WT codon
+        codon_seq = self.codon_seq()
+        wt_codon = "".join(codon_seq[aa_location - 1])
 
-    #     # Obtain list of codons that give rise to MT amino acid via a SNV
-    #     mt_codon_list = mutant_codon_list(wt_codon, mt_aa)
+        # Obtain list of codons that give rise to MT amino acid via a SNV
+        mt_codon_list = self.mutant_codon_list(wt_codon, mt_aa)
 
-    #         # Define list to hold index locations of nucleotide changes between WT/M codon
-    #         # List holds [index location, MT codon]
-    #         mutation_index = []
+        # Declare list to hold index locations of nucleotide changes between WT/M codon
+        # List holds [index location, MT codon]
+        mutation_index = []
 
-    #         # Iterate over codons in mutant codon list
-    #         for mt_codon in mt_codon_list:
-    #             index = 0
+        # Iterate over codons in mutant codon list
+        for mt_codon in mt_codon_list:
+            index = 0
 
-    #             # Determine codon index position where nucleotide changes occur
-    #             for i,j in zip(wt_codon, mt_codon):
-    #                 if i !=j:
-    #                     mutation_index.append([index, mt_codon])
-    #                 else:
-    #                     index += 1
+            # Determine codon index position where nucleotide changes occur
+            for i,j in zip(wt_codon, mt_codon):
+                if i !=j:
+                    mutation_index.append([index, mt_codon])
+                else:
+                    index += 1
+
+        # List to hold coding coordinates
+        coding_variants = []
+
+        for index in mutation_index:
+
+            # Holds index location of first nucleotide of WT codon
+            nt_change = ((aa_location) * 3) - 3
+
+            # Determine which nucleotide in codon is changed
+            nt_change = nt_change + index[0]
+
+            coding_variants.append(f"c.{nt_change + 1} {wt_codon[index[0]]}/{index[1][index[0]]}")
+
+        return coding_variants
 
     
 
