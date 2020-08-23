@@ -86,6 +86,40 @@ class Gene(models.Model):
         table = Gene.codon_table
         return f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
 
+    @classmethod
+    def mutant_codon_list(cls, wt_codon, mt_aa):
+        """
+        Returns list of codons that give rise to an amino acid via a SNV within reference codon
+        """
+
+        # Obtain codons of MT amino acid
+        mt_codons = aa_table[mt_aa]
+
+        # List to store codons of mutant amino acid
+        mut_codon_list = []
+
+        # Iterate over each codon in list
+        for mt_codon in mt_codons:
+
+            # Counter to track nucleotide changes
+            mutations = 0
+
+            # Counter to track nucleotide count
+            nt_count = 0
+
+            # Iterate over each nucleotide in wildtype and mutant codon
+            # Zip function pairs the two nucelotides together
+            for i,j in zip(wt_codon, mt_codon):
+                nt_count += 1
+
+                if i != j:
+                    mutations += 1
+
+                # Append codons to list that give rise to amino acid via a SNV
+                if nt_count == 3 and mutations == 1:
+                    mut_codon_list.append(mt_codon)
+        return mut_codon_list
+
 
     # def coding_variant(self, wt_aa, aa_location, mt_aa):
     #     """
