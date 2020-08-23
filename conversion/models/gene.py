@@ -125,6 +125,9 @@ class Gene(models.Model):
         """
         Return potential coding variants as result of protein change 
         """
+        
+        # Convert position to integer
+        aa_location = int(aa_location)
 
         # Obtain WT codon
         codon_seq = self.codon_seq()
