@@ -1,0 +1,4 @@
+# Ignore what's in pycache
+conversion/__pycache__
+conversion/models/__pycache__
+*.pyc
