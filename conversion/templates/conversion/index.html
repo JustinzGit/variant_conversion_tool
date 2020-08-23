@@ -1,5 +1,24 @@
 {% extends "conversion/layout.html" %}
 
 {% block body %}
-    
+    <table id="aa_table" class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Amino Acid</th>
+            <th scope="col">Name</th>
+            <th scope="col">3 Letter Code</th>
+            <th scope="col">Amino Acid Properties</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entry in aa_table %}
+            <tr>
+                <td>{{ entry.0 }}</td>
+                <td>{{ entry.1 }}</td>
+                <td>{{ entry.2 }}</td>
+                <td>{{ entry.3 }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
