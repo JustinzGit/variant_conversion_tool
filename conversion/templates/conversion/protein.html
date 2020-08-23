@@ -12,12 +12,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for variant in coding_variants %}
+            {% for coding, genomic in variants %}
                 <tr>
                     <td style="width: 200px">{{ gene_name }}</td>
                     <td style="width: 200px">{{ protein_variant }}</td>
-                    <td style="width: 200px"> c.{{ variant.0 }} {{ variant.1 }}/{{ variant.2 }}</td>
-                    <td style="width: 200px"> TODO </td>
+                    <td style="width: 200px"> c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
+                    <td style="width: 200px"> {{ genomic.assembly }} Chr{{genomic.chromosome}}:{{genomic.gdna_location}} {{ coding.1 }}/{{ coding.2}}</td>
                     <td style="width: 200px"> TODO </td>
                 </tr>
             {% endfor %}
