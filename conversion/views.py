@@ -16,7 +16,7 @@ def conversion(request):
             cdna_seq = request.POST["cdna_text"].upper()
 
         else:
-            return render(request, "conversion/conversion.html", {
+            return render(request, "conversion/index.html", {
                 "alert": "A cDNA submission is required",
             })
     
@@ -29,9 +29,8 @@ def conversion(request):
         nt_location = request.POST["nt_location"]
         mt_nt = request.POST["mt_nt"]
 
-        return render(request, "conversion/conversion.html", {
+        return render(request, "conversion/index.html", {
                     "file_data": gene.protein_variant(wt_nt, int(nt_location), mt_nt)
                 })
-
 
     return render(request, "conversion/index.html")
