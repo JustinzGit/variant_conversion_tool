@@ -20,7 +20,7 @@ def conversion(request):
                 "alert": "A cDNA submission is required",
             })
     
-        gene = Gene.objects.create(
+        gene = Gene(
             name = request.POST["gene_name"],
             cdna_seq = cdna_seq
         )
