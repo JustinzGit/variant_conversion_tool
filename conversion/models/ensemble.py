@@ -38,6 +38,10 @@ class Ensemble(models.Model):
 
     @classmethod
     def genomic_information(cls, transcript_id, nt_position):
+        """
+        Use ensemble API to genomic information (hg38)
+        http://europepmc.org/article/MED/25236461?singleResult=true
+        """
         
         # Request genomic information 
         request = f"https://rest.ensembl.org/map/cds/{transcript_id}/{nt_position}..{nt_position}"
