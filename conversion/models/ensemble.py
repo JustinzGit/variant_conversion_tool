@@ -34,3 +34,21 @@ class Ensemble(models.Model):
 
         # Obtain the first transcript ID of acquired gene ID
         return repr(response["Transcript"][0]["id"]).replace("'","")
+
+
+    @classmethod
+    def genomic_information(cls, transcript_id, nt_position):
+        
+        # Request genomic information 
+        request = f"https://rest.ensembl.org/map/cds/{transcript_id}/{nt_position}..{nt_position}"
+        response = requests.get(request, headers={ "Content-Type" : "application/json"})
+
+        # Convert string to JSON object
+        response = response.json()
+    
+        return {
+            "chromosome": repr(response["mappings"][0]["seq_region_name"]).replace("'",""),
+            "gdna_location": repr(response["mappings"][0]["start"]),
+            "assembly": repr(response["mappings"][0]["assembly_name"]),
+            "strand": repr(response["mappings"][0]["strand"])
+        }
