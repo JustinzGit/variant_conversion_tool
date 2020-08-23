@@ -2,13 +2,12 @@ from django.db import models
 
 class Gene(models.Model):
     name = models.CharField(max_length=8)
-    sequence = models.TextField()
+    cdna_seq = models.TextField()
         
     def format_sequence(self):
-        cdna_seq = self.sequence.read().decode("utf-8").replace("\n", "").replace("\r", "").upper()
 
         # Store sequence in a list of single characters
-        nt_seq = list(cdna_seq)
+        nt_seq = list(self.cdna_seq)
 
         # Group nucleotides by 3
         codon_seq = []
