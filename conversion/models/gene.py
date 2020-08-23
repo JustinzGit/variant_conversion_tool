@@ -157,16 +157,61 @@ class Gene(models.Model):
         for index in mutation_index:
 
             # Holds index location of first nucleotide of WT codon
-            nt_change = ((aa_location) * 3) - 3
+            first_nt = ((aa_location) * 3) - 3
 
             # Determine which nucleotide in codon is changed
-            nt_change = nt_change + index[0]
+            nt_change = (first_nt + index[0]) + 1
 
-            coding_variants.append(f"c.{nt_change + 1} {wt_codon[index[0]]}/{index[1][index[0]]}")
+            wt_nt = wt_codon[index[0]]
+            mt_nt = index[1][index[0]]
+
+            coding_variants.append([nt_change, wt_nt, mt_nt])
 
         return coding_variants
 
-    
 
+    # def genomic_variants(self, gene_name, aa_location, mt_aa):
+    #     """
+    #     Returns a list of genomic information about a proteins potential coding variants
+    #     """
+    #     # Convert position to integer
+    #     aa_location = int(aa_location)
+
+    #     # Obtain WT codon
+    #     codon_seq = self.codon_seq()
+    #     wt_codon = "".join(codon_seq[aa_location - 1])
+
+    #     # Obtain list of codons that give rise to MT amino acid via a SNV
+    #     mt_codon_list = self.mutant_codon_list(wt_codon, mt_aa)
+
+    #     # Declare list to hold index locations of nucleotide changes between WT/M codon
+    #     # List holds [index location, MT codon]
+    #     mutation_index = []
+
+    #     # Iterate over codons in mutant codon list
+    #     for mt_codon in mt_codon_list:
+    #         index = 0
+
+    #         # Determine codon index position where nucleotide changes occur
+    #         for i,j in zip(wt_codon, mt_codon):
+    #             if i !=j:
+    #                 mutation_index.append([index, mt_codon])
+    #             else:
+    #                 index += 1
+
+    #     # Declare list to hold variants genomic information
+    #     genomic_info = []
+
+    #     for index in mutation_index:
+    #         # Holds index location of first nucleotide of WT codon
+    #         first_nt = ((aa_location) * 3) - 3
+
+    #         # Determine which nucleotide in codon is changed
+    #         nt_change = first_nt + index[0]
+
+    #         # Collect genomic information from Ensemble
+    #         genomic_info.append(Ensemble.get_genomic_info(gene_name, nt_change + 1))
+
+    #     return genomic_info
 
     
