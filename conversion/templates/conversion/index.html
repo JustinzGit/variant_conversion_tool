@@ -22,7 +22,7 @@
     </div>
 
     <div>
-        <form action="{% url 'protein_conversion' %}" enctype="multipart/form-data" method="POST">
+        <form action="{% url 'conversion' %}" enctype="multipart/form-data" method="POST">
             {% csrf_token %}
             <p>Gene Name: <input type="text" name="gene_name" placeholder="Gene Name"></p>
             

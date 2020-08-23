@@ -6,7 +6,7 @@ from django.shortcuts import render
 def index(request):
     return render(request, "conversion/index.html")
 
-def protein_conversion(request):
+def conversion(request):
     if request.method == "POST":
 
         # cDNA seq was submitted as file 
@@ -20,10 +20,10 @@ def protein_conversion(request):
             cdna_seq = cdna_seq.replace("\n", "").replace("\r", "").upper()
 
         else:
-            return render(request, "conversion/protein_conversion.html", {
+            return render(request, "conversion/conversion.html", {
                 "alert": "A cDNA submission is required",
             })
             
-    return render(request, "conversion/protein_conversion.html", {
+    return render(request, "conversion/conversion.html", {
                 "file_data": cdna_seq
             })
