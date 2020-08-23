@@ -4,7 +4,10 @@ class Gene(models.Model):
     name = models.CharField(max_length=8)
     cdna_seq = models.TextField()
         
-    def format_sequence(self):
+    def codon_seq(self):
+        """
+        Returns a nested list of codons
+        """
 
         # Store sequence in a list of single characters
         nt_seq = list(self.cdna_seq)
