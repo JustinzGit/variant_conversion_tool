@@ -70,13 +70,24 @@ def protein(request):
         for variant in coding_variants:
             genomic_variants.append(Ensemble.get_genomic_info(gene.name, variant[0]))
 
+        # Collect data from gnomAD
+        # Using first variant in genomic / coding variants list
+        strand = genomic_variants[0]["strand"]
+        gdna_start = genomic_variants[0]["gdna_start"]
+        chromosome = genomic_variants[0]["chromosome"]
+        wt_nt = coding_variants[0][1]
+        mt_nt = coding_variants[0][2]
+
+        gnomad_data = Gnomad.get_gnomad_data(strand, chromosome, gdna_start, wt_nt, mt_nt)
+
         # Zip variant lists to iterate over together in html
         variants = zip(coding_variants, genomic_variants)
 
         return render(request, "conversion/protein.html", {
                     "gene_name": gene.name,
                     "variants": variants,
-                    "protein_variant": protein_variant
+                    "protein_variant": protein_variant,
+                    "gnomad_data": gnomad_data
                 })
 
     return render(request, "conversion/index.html")
