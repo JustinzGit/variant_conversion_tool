@@ -25,8 +25,13 @@ def conversion(request):
             cdna_seq = cdna_seq
         )
 
+        wt_nt = request.POST["wt_nt"]
+        nt_location = request.POST["nt_location"]
+        mt_nt = request.POST["mt_nt"]
+
         return render(request, "conversion/conversion.html", {
-                    "file_data": gene.codon_seq()
+                    "file_data": gene.protein_variant(wt_nt, int(nt_location), mt_nt)
                 })
+
 
     return render(request, "conversion/index.html")
