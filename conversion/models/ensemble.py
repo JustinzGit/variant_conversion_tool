@@ -56,3 +56,19 @@ class Ensemble(models.Model):
             "assembly": repr(response["mappings"][0]["assembly_name"]),
             "strand": repr(response["mappings"][0]["strand"])
         }
+
+    @classmethod
+    def hg38_to_hg19(cls, chromosome, hg38_location):
+        """
+        Use ensemble API to convert hg38 coordinates to hg19
+        http://europepmc.org/article/MED/25236461?singleResult=true
+        """
+
+        # Request genomic information 
+        request = f"https://rest.ensembl.org/map/human/GRCh38/{chromosome}:{hg38_location}..{hg38_location}:1/GRCh37?content-type=application/json"
+        response = requests.get(request, headers={ "Content-Type" : "application/json"})
+        
+        # Convert string to JSON object
+        response = response.json()
+       
+       return response['mappings'][0]['mapped']['start']
