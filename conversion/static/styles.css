@@ -71,3 +71,11 @@
 ::-webkit-input-placeholder {
     text-align: center;
   }
+
+#aa_table{
+    width: 850px;
+}
+
+#aa_table th, td{
+    text-align: center;
+}
