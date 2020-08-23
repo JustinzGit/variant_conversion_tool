@@ -117,3 +117,8 @@ class Gnomad(models.Model):
             gnomad_data['total'].append("{0:.9f}".format(float(gnomad_data['total'][0]/gnomad_data['total'][1])))
         
         return gnomad_data
+
+    @classmethod
+    def get_gnomad_data(cls, strand, chromosome, gdna_start, wt_nt, mt_nt):
+        variant_id = cls.get_variant_id(strand, chromosome, gdna_start, wt_nt, mt_nt)
+        return cls.gnomad_data(variant_id)
