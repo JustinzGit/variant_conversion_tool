@@ -30,7 +30,7 @@ def index(request):
         "aa_table": aa_table
     })
 
-def conversion(request):
+def protein(request):
     if request.method == "POST":
 
         # cDNA seq was submitted as file 
@@ -59,3 +59,6 @@ def conversion(request):
                 })
 
     return render(request, "conversion/index.html")
+
+def coding(request):
+    pass
