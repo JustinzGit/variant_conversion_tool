@@ -59,18 +59,24 @@ def protein(request):
         aa_location = request.POST["aa_location"]
         mt_aa = request.POST["mt_aa"]
 
+        # Format protein variant according to input 
         protein_variant = f"p.{wt_aa}{aa_location}{mt_aa}"
+
+        # Obtain list of coding variants 
         coding_variants = gene.coding_variants(wt_aa, aa_location, mt_aa)
 
         # Fetch genomic information for each potential coding variant
         genomic_variants = []
         for variant in coding_variants:
-            genomic_variants.append(gene.genomic_variant(gene.name, variant[0]))
+            genomic_variants.append(Ensemble.get_genomic_info(gene.name, variant[0]))
+
+        # Zip variant lists to iterate over together in html
+        variants = zip(coding_variants, genomic_variants)
 
         return render(request, "conversion/protein.html", {
                     "gene_name": gene.name,
-                    "protein_variant": protein_variant,
-                    "coding_variants": coding_variants
+                    "variants": variants,
+                    "protein_variant": protein_variant
                 })
 
     return render(request, "conversion/index.html")
