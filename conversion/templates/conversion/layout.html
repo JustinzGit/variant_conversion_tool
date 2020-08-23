@@ -16,78 +16,76 @@
     </head>
 
     <body>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h3>Variant Annotation Tool (VAT)</h3>
-                    <p>The VAT is a tool for scientists who wish to easily convert mutation coordinates to their 
-                        respective coding or protein variant.</p>
-                    <!-- <ul>
-                        <li>Annotation tab provides coding and protein coordinate conversions.</li>
-                        <li>Genomic coordinates from assembly hg38 are also determined after form submission.</li>
-                        <li>Nucleotide changes in gnomAD variant ID reflect the genomic change via the positive strand.</li>
-                        <li>gnomAD version 3, mapped to GRCh38, is used to query variants.</li>
-                    </ul> -->
-                
-                    <b>Specifications:</b>
-                    <ol>
-                        <li>Provide the official gene name.</li>
-                        <li>Input a cDNA text file that begins with a start codon and ends with a stop codon.
-                        <ul><li>Alternatively, the nucelotide sequence can be pasted into the provided text box.</li></ul></li>
-                        <li>Input either coding or protein variant to obtain conversion coordinates.</li>
-                    </ol>
-                </div>
-            
-                <div class="col">
-                    <form action="{% url 'conversion' %}" enctype="multipart/form-data" method="POST">
-                        {% csrf_token %}
-                        <p>Gene Name: <input type="text" name="gene_name" placeholder="Gene Name"></p>
+        <div class="grid-container">
+            <div class="grid-item">
+                <form action="{% url 'conversion' %}" enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    <p>Gene Name: <input type="text" name="gene_name" placeholder="Gene Name"></p>
+                    
+                    <p>cDNA File: <input name="cdna_file" type="file"></p>
+        
+                    <p>cDNA Text: <textarea name="cdna_text" rows="1.5"></textarea></p>
+        
+                    <div id="aa_input">
+        
+                        <!-- WT amnio acid input -->
+                        <p>WT AA <input type="text" name="wt_aa"></p>
+        
+                        <!-- AA location -->
+                        <p>Protein Variant <input type="number" name="aa_location" placeholder="Amino Acid Position"></p>
+        
+                        <!-- MT amino acid input -->
+                        <p>MT AA <input type="text" name="mt_aa"></p>
+        
+                        <button type="submit">Get Coding Coordinate</button>
+                    </div>
+        
+                    <div id="nt_input">
+        
+                        <!-- WT nucleotide input -->
+                        <p>WT</p>
+                        <select name="wt_nt">
+                            <option selected value="A">A</option>
+                            <option value="C">C</option>
+                            <option value="T">T</option>
+                            <option value="G">G</option>
+                        </select>
                         
-                        <p>cDNA File: <input name="cdna_file" type="file"></p>
+                        <!-- Nucleotide location -->
+                        <p>Coding Variant <input type="number" name="nt_location" placeholder="Coding Position"></p>
+        
+                        <!-- MT nucleotide input -->
+                        <p>MT</p>
+                        <select name="mt_nt">
+                            <option selected value="A">A</option>
+                            <option value="C">C</option>
+                            <option value="T">T</option>
+                            <option value="G">G</option>
+                        </select>
+        
+                        <button type="submit">Get Protein Coordinate</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="grid-item">
+                <h3>Variant Annotation Tool (VAT)</h3>
+                <p>The VAT is a tool for scientists who wish to easily convert mutation coordinates to their 
+                    respective coding or protein variant.</p>
+                <!-- <ul>
+                    <li>Annotation tab provides coding and protein coordinate conversions.</li>
+                    <li>Genomic coordinates from assembly hg38 are also determined after form submission.</li>
+                    <li>Nucleotide changes in gnomAD variant ID reflect the genomic change via the positive strand.</li>
+                    <li>gnomAD version 3, mapped to GRCh38, is used to query variants.</li>
+                </ul> -->
             
-                        <p>cDNA Text: <textarea name="cdna_text" rows="1.5"></textarea></p>
-            
-                        <div id="aa_input">
-            
-                            <!-- WT amnio acid input -->
-                            <p>WT AA <input type="text" name="wt_aa"></p>
-            
-                            <!-- AA location -->
-                            <p>Protein Variant <input type="number" name="aa_location" placeholder="Amino Acid Position"></p>
-            
-                            <!-- MT amino acid input -->
-                            <p>MT AA <input type="text" name="mt_aa"></p>
-            
-                            <button type="submit">Get Coding Coordinate</button>
-                        </div>
-            
-                        <div id="nt_input">
-            
-                            <!-- WT nucleotide input -->
-                            <p>WT</p>
-                            <select name="wt_nt">
-                                <option selected value="A">A</option>
-                                <option value="C">C</option>
-                                <option value="T">T</option>
-                                <option value="G">G</option>
-                            </select>
-                            
-                            <!-- Nucleotide location -->
-                            <p>Coding Variant <input type="number" name="nt_location" placeholder="Coding Position"></p>
-            
-                            <!-- MT nucleotide input -->
-                            <p>MT</p>
-                            <select name="mt_nt">
-                                <option selected value="A">A</option>
-                                <option value="C">C</option>
-                                <option value="T">T</option>
-                                <option value="G">G</option>
-                            </select>
-            
-                            <button type="submit">Get Protein Coordinate</button>
-                        </div>
-                    </form>
-                </div>
+                <b>Specifications:</b>
+                <ol>
+                    <li>Provide the official gene name.</li>
+                    <li>Input a cDNA text file that begins with a start codon and ends with a stop codon.
+                    <ul><li>Alternatively, the nucelotide sequence can be pasted into the provided text box.</li></ul></li>
+                    <li>Input either coding or protein variant to obtain conversion coordinates.</li>
+                </ol>
             </div>
         </div>
 
