@@ -1,8 +1,9 @@
 from django.db import models
 
 class Gene(models.Model):
-    name = models.CharField(max_length=8)
-    cdna_seq = models.TextField()
+    def __init__(self, name, cdna_seq):
+        self.name = name
+        self.cdna_seq = cdna_seq
         
     def codon_seq(self):
         """
@@ -20,3 +21,6 @@ class Gene(models.Model):
                 codon_seq.append(codon)
                 
         return codon_seq
+
+
+    
