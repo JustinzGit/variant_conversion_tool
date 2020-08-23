@@ -32,7 +32,7 @@
                         <div id="wt_aa"><center>WT AA</center><input type="text" class="form-control form-control-sm" min="1" name="wt_aa"></div>
         
                         <!-- AA location -->
-                        <div id="aa_location"><center>Protein Variant</center><input type="number" class="form-control form-control-sm" min="1" name="aa_location" placeholder="Amino Acid Position"></div>
+                        <div id="aa_location"><center><b>Protein Variant</b></center><input type="number" class="form-control form-control-sm" min="1" name="aa_location" placeholder="Amino Acid Position"></div>
         
                         <!-- MT amino acid input -->
                         <div id="mt_aa"><center>MT AA </center><input id="mt_aa" type="text" class="form-control form-control-sm" min="1" name="mt_aa"></div>
@@ -54,7 +54,7 @@
                         </div>
                         
                         <!-- Nucleotide location -->
-                        <div id="nt_location"><center>Coding Variant</center><input type="number" class="form-control form-control-sm" name="nt_location" placeholder="Coding Position"></div>
+                        <div id="nt_location"><center><b>Coding Variant</b></center><input type="number" class="form-control form-control-sm" name="nt_location" placeholder="Coding Position"></div>
         
                         <!-- MT nucleotide input -->
                         <div id="mt_nt">
@@ -90,10 +90,10 @@
                     <ul><li>Alternatively, the nucelotide sequence can be pasted into the provided text box.</li></ul></li>
                     <li>Input either coding or protein variant to obtain conversion coordinates.</li>
                 </ol>
+
+                {% block body %}
+                {% endblock %}
             </div>
         </div>
-
-        {% block body %}
-        {% endblock %}
     </body>
 </html>
