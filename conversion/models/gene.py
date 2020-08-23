@@ -60,8 +60,13 @@ class Gene(models.Model):
         mt_codon = "".join(mt_codon)
 
         table = Gene.codon_table
-        protein_variant = f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
-        return protein_variant
+        return f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
+
+    def coding_variant(self, wt_nt, nt_location, mt_nt):
+        """
+        Return coding variant as result of protein change 
+        """
+        return f"c.{nt_location} {wt_nt}/{mt_nt}"
 
     
 
