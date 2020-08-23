@@ -37,9 +37,33 @@ class Gene(models.Model):
         if len(nt_seq) % 3 == 0:
             for i in range(0, len(nt_seq), 3):
                 codon = list(nt_seq[i:i + 3])
-                codon_seq.append(codon)
-                
+                codon_seq.append(codon)   
+
         return codon_seq
+
+    def protein_variant(self, wt_nt, position, mt_nt):
+        """
+        Return protein variant as result of nucleotide change
+        """
+        
+        # Obtain the WT codon
+        codon_position = int((position - 1) / 3)
+        codon_seq = self.codon_seq()
+        wt_codon = codon_seq[codon_position]
+
+        # Mutate the WT codon
+        mt_codon = wt_codon.copy()
+        mt_codon[(position - 1) % 3] = mt_nt
+
+        # Convert WT/M codon lists to strings
+        wt_codon = "".join(wt_codon)
+        mt_codon = "".join(mt_codon)
+
+        table = Gene.codon_table
+        protein_variant = f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
+        return protein_variant
+
+    
 
 
     
