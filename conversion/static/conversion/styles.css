@@ -72,10 +72,10 @@
     text-align: center;
   }
 
-#aa_table{
+#variant_table, #aa_table{
     width: 850px;
 }
 
-#aa_table th, td{
+#variant_table, #aa_table th, td{
     text-align: center;
 }
