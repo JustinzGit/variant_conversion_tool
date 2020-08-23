@@ -72,3 +72,9 @@ class Ensemble(models.Model):
         response = response.json()
        
        return response['mappings'][0]['mapped']['start']
+
+    @classmethod
+    def get_genomic_info(cls, gene_name, nt_location):
+        gene_id = self.gene_id(gene_name)
+        transcript_id = self.transcript_id(gene_id)
+        return self.genomic_information(transcript_id, nt_location)
