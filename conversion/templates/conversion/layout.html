@@ -20,31 +20,31 @@
             <div class="grid-item">
                 <form action="{% url 'conversion' %}" enctype="multipart/form-data" method="POST">
                     {% csrf_token %}
-                    <p>Gene Name: <input type="text" name="gene_name" placeholder="Gene Name"></p>
+                    <p>Gene Name: <input type="text" class="form-control form-control-sm" name="gene_name" placeholder="Gene Name"></p>
                     
                     <p>cDNA File: <input name="cdna_file" type="file"></p>
         
-                    <p>cDNA Text: <textarea name="cdna_text" rows="1.5"></textarea></p>
+                    <p>cDNA Text: <textarea class="form-control" name="cdna_text" rows="1.5"></textarea></p>
         
                     <div id="aa_input">
         
                         <!-- WT amnio acid input -->
-                        <p>WT AA <input type="text" name="wt_aa"></p>
+                        <p>WT AA <input type="text" class="form-control form-control-sm" min="1" name="wt_aa"></p>
         
                         <!-- AA location -->
-                        <p>Protein Variant <input type="number" name="aa_location" placeholder="Amino Acid Position"></p>
+                        <p>Protein Variant <input type="number" class="form-control form-control-sm" min="1" name="aa_location" placeholder="Amino Acid Position"></p>
         
                         <!-- MT amino acid input -->
-                        <p>MT AA <input type="text" name="mt_aa"></p>
+                        <p>MT AA <input type="text" class="form-control form-control-sm" min="1" name="mt_aa"></p>
         
-                        <button type="submit">Get Coding Coordinate</button>
+                        <button type="submit" class="btn btn-primary">Get Coding Coordinate</button>
                     </div>
         
                     <div id="nt_input">
         
                         <!-- WT nucleotide input -->
                         <p>WT</p>
-                        <select name="wt_nt">
+                        <select name="wt_nt" class="form-control form-control-sm">
                             <option selected value="A">A</option>
                             <option value="C">C</option>
                             <option value="T">T</option>
@@ -52,18 +52,18 @@
                         </select>
                         
                         <!-- Nucleotide location -->
-                        <p>Coding Variant <input type="number" name="nt_location" placeholder="Coding Position"></p>
+                        <p>Coding Variant <input type="number" class="form-control form-control-sm" name="nt_location" placeholder="Coding Position"></p>
         
                         <!-- MT nucleotide input -->
                         <p>MT</p>
-                        <select name="mt_nt">
+                        <select name="mt_nt" class="form-control form-control-sm">
                             <option selected value="A">A</option>
                             <option value="C">C</option>
                             <option value="T">T</option>
                             <option value="G">G</option>
                         </select>
         
-                        <button type="submit">Get Protein Coordinate</button>
+                        <button type="submit" class="btn btn-primary">Get Protein Coordinate</button>
                     </div>
                 </form>
             </div>
