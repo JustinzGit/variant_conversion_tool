@@ -9,11 +9,11 @@ def conversion(request):
 
         # cDNA seq was submitted as file 
         if request.FILES.get("cdna_file", False):
-            cdna_seq = request.FILES["cdna_file"]
+            cdna_seq = request.FILES["cdna_file"].read().decode("utf-8").replace("\n", "").replace("\r", "").upper()
 
         # cDNA seq was submitted through textbox
         elif request.POST["cdna_text"]:
-            cdna_seq = request.POST["cdna_text"]
+            cdna_seq = request.POST["cdna_text"].upper()
 
         else:
             return render(request, "conversion/conversion.html", {
@@ -22,7 +22,7 @@ def conversion(request):
     
         gene = Gene.objects.create(
             name = request.POST["gene_name"],
-            cdna_seq = cdna_seq.read().decode("utf-8").replace("\n", "").replace("\r", "").upper()
+            cdna_seq = cdna_seq
         )
 
         return render(request, "conversion/conversion.html", {
