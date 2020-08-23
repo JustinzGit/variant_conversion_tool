@@ -1,7 +1,5 @@
 from django.shortcuts import render
-# from django import forms
-# from forms import UploadFileForm
-# from django.http import HttpResponse
+from .models import *
 
 def index(request):
     return render(request, "conversion/index.html")
@@ -10,20 +8,25 @@ def conversion(request):
     if request.method == "POST":
 
         # cDNA seq was submitted as file 
-        if request.FILES.get('cdna_file', False):
-            cdna_seq = request.FILES.read().decode("utf-8")
-            cdna_seq = cdna_seq.replace("\n", "").replace("\r", "").upper()
+        if request.FILES.get("cdna_file", False):
+            cdna_seq = request.FILES["cdna_file"]
 
         # cDNA seq was submitted through textbox
         elif request.POST["cdna_text"]:
             cdna_seq = request.POST["cdna_text"]
-            cdna_seq = cdna_seq.replace("\n", "").replace("\r", "").upper()
 
         else:
             return render(request, "conversion/conversion.html", {
                 "alert": "A cDNA submission is required",
             })
-            
-    return render(request, "conversion/conversion.html", {
-                "file_data": cdna_seq
-            })
+    
+        gene = Gene.objects.create(
+            name = request.POST["gene_name"],
+            cdna_seq = cdna_seq.read().decode("utf-8").replace("\n", "").replace("\r", "").upper()
+        )
+
+        return render(request, "conversion/conversion.html", {
+                    "file_data": gene.codon_seq()
+                })
+
+    return render(request, "conversion/index.html")
