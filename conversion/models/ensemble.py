@@ -1,6 +1,7 @@
 from django.db import models
 
 class Ensemble(models.Model):
+
     @classmethod
     def gene_id(cls, gene_name):
         """
@@ -71,10 +72,10 @@ class Ensemble(models.Model):
         # Convert string to JSON object
         response = response.json()
        
-       return response['mappings'][0]['mapped']['start']
+        return response['mappings'][0]['mapped']['start']
 
     @classmethod
     def get_genomic_info(cls, gene_name, nt_location):
-        gene_id = self.gene_id(gene_name)
-        transcript_id = self.transcript_id(gene_id)
-        return self.genomic_information(transcript_id, nt_location)
+        gene_id = cls.gene_id(gene_name)
+        transcript_id = cls.transcript_id(gene_id)
+        return cls.genomic_information(transcript_id, nt_location)
