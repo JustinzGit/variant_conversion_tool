@@ -67,3 +67,7 @@
     margin-left: 35px;
     padding-bottom: 40px;
 }
+
+::-webkit-input-placeholder {
+    text-align: center;
+  }
