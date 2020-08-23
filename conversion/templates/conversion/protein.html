@@ -1,0 +1,26 @@
+{% extends "conversion/layout.html" %}
+
+{% block body %}
+    <table id="variant_table" class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 200px" scope="col">Gene</th>
+                <th style="width: 200px" scope="col">Protein</th>
+                <th style="width: 200px" scope="col">Coding</th>
+                <th style="width: 360px" scope="col">Genomic</th>
+                <th style="width: 300px" scope="col">VarID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coding_variant in coding_variants %}
+                <tr>
+                    <td style="width: 200px">{{ gene_name }}</td>
+                    <td style="width: 200px">{{ protein_variant }}</td>
+                    <td style="width: 200px">{{ coding_variant }}</td>
+                    <td style="width: 200px"> TODO </td>
+                    <td style="width: 200px"> TODO </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
