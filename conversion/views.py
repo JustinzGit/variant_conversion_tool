@@ -62,6 +62,10 @@ def protein(request):
         protein_variant = f"p.{wt_aa}{aa_location}{mt_aa}"
         coding_variants = gene.coding_variants(wt_aa, aa_location, mt_aa)
 
+        # Fetch genomic information for each potential coding variant
+        genomic_variants = []
+        for variant in coding_variants:
+            genomic_variants.append(gene.genomic_variant(gene.name, variant[0]))
 
         return render(request, "conversion/protein.html", {
                     "gene_name": gene.name,
