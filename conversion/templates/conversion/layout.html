@@ -12,13 +12,15 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         
         {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'conversion/styles.css' %}">
+        <script src="{% static 'conversion/index.js' %}"></script>
+        
     </head>
 
     <body>
         <div class="grid-container">
             <div class="grid-item">
-                <form action="{% url 'conversion' %}" enctype="multipart/form-data" method="POST">
+                <form id="variant_form" enctype="multipart/form-data" method="POST">
                     {% csrf_token %}
                     <p>Gene Name: <input id="gene_name" type="text" class="form-control form-control-sm" name="gene_name" placeholder="Gene Name"></p>
                     
