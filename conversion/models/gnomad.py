@@ -1,3 +1,4 @@
+import requests
 from django.db import models
 
 class Gnomad(models.Model):
@@ -35,7 +36,7 @@ class Gnomad(models.Model):
         """
 
         query = """query{{
-            variant(dataset: gnomad_r2_1, variantId: "{variant_id}") {{
+            variant(dataset: gnomad_r3, variantId: "{variant_id}") {{
                 genome{{
                 ac
                 an
@@ -64,8 +65,10 @@ class Gnomad(models.Model):
             }}
             }}""" 
 
+        query = query.format(variant_id=variant_id)
+
         # Request data from gnomad
-        request = requests.post("https://gnomad.broadinstitute.org/api", json={'query': query}) 
+        response = requests.post("https://gnomad.broadinstitute.org/api", json={'query': query}) 
 
         # Convert string to JSON object
         response = response.json()
@@ -98,7 +101,7 @@ class Gnomad(models.Model):
                 gnomad_data['homozygotes'].append(populations[i]['ac_hom'])
 
             # Calculate allele frequency
-            for i in range(len(gnomad['pop_ac'])):
+            for i in range(len(gnomad_data['allele_count'])):
                 gnomad_data['allele_freq'].append("{0:.9f}".format(float(gnomad_data['allele_count'][i]/gnomad_data['allele_number'][i])))
 
             allele_count_total = 0
@@ -106,10 +109,10 @@ class Gnomad(models.Model):
             homozygotes_total = 0
 
             # Calculate totals for population data across ethnicities
-            for i in range(len(gnomad_data['pop_ac'])):
-                allele_count_total += int(gnomad_data['pop_ac'][i])
-                allele_number_total += int(gnomad_data['pop_an'][i])
-                homozygotes_total += int(gnomad_data['pop_hom'][i])
+            for i in range(len(gnomad_data['allele_count'])):
+                allele_count_total += int(gnomad_data['allele_count'][i])
+                allele_number_total += int(gnomad_data['allele_number'][i])
+                homozygotes_total += int(gnomad_data['homozygotes'][i])
             
             gnomad_data['total'].append(allele_count_total)
             gnomad_data['total'].append(allele_number_total)
