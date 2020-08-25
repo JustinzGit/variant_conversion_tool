@@ -83,7 +83,7 @@ def protein(request):
         if gnomad_data['genome'] is not None:
             gnomad_data = gnomad_data['genome']
 
-        else gnomad_data['exome'] is not None:
+        else:
             gnomad_data = gnomad_data['exome']
     
         # Zip variant lists to iterate over together in html
