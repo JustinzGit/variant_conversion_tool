@@ -54,7 +54,7 @@ class Ensemble(models.Model):
     
         return {
             "chromosome": repr(response["mappings"][0]["seq_region_name"]).replace("'",""),
-            "gdna_location": repr(response["mappings"][0]["start"]),
+            "gdna_start": repr(response["mappings"][0]["start"]),
             "assembly": repr(response["mappings"][0]["assembly_name"]).strip("'"),
             "strand": repr(response["mappings"][0]["strand"])
         }
