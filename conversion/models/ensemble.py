@@ -2,6 +2,8 @@ import requests
 from django.db import models
 
 class Ensemble(models.Model):
+    gene_name = models.CharField(max_length=10, default=None)
+    transcript = models.CharField(max_length=20, default=None)
 
     @classmethod
     def gene_id(cls, gene_name):
@@ -77,6 +79,18 @@ class Ensemble(models.Model):
 
     @classmethod
     def get_genomic_info(cls, gene_name, nt_location):
-        gene_id = cls.gene_id(gene_name)
-        transcript_id = cls.transcript_id(gene_id)
-        return cls.genomic_information(transcript_id, nt_location)
+        gene_info = Ensemble.objects.filter(gene_name=gene_name).first()
+        
+        if gene_info is not None:
+            return cls.genomic_information(gene_info.transcript, nt_location)
+            
+        else:
+            gene_id = cls.gene_id(gene_name)
+            transcript_id = cls.transcript_id(gene_id)
+
+            Ensemble.objects.create(
+                gene_name = gene_name,
+                transcript = transcript_id)
+
+            return cls.genomic_information(transcript_id, nt_location)
+        
