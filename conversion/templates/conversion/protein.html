@@ -18,9 +18,44 @@
                     <td style="width: 200px">{{ protein_variant }}</td>
                     <td style="width: 200px"> c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
                     <td style="width: 200px"> {{ genomic.assembly }} Chr{{genomic.chromosome}}:{{genomic.gdna_location}} {{ coding.1 }}/{{ coding.2}}</td>
-                    <td style="width: 200px"> TODO </td>
+                    <td style="width: 200px"> {{ variant_id }} </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+  
+        <u><h1 id="gnomad_title">Gnomad Data</h1></u>
+        <table id="gnomad_table" class="table">
+            <!-- <p id="variant_title">Variant {{variant_id}}</p> -->
+            <thead class="thead-light">
+                <th scope="col">Ethnicity</th>
+                <th scope="col">Allele Count</th>
+                <th scope="col">Allele Number</th>
+                <th scope="col">Homozygotes</th>
+                <th scope="col">Allele Frequency</th>
+            </thead>
+            <tbody>
+                
+                {% for key, values in gnomad_data.items %}
+                    {% if key != 'totals' %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ values.allele_count }}</td>
+                            <td>{{ values.allele_count }}</td>
+                            <td>{{ values.allele_number }}</td>
+                            <td>{{ values.homozygotes }}</td>
+                            <td>{{ values.allele_freq }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr>
+                    <td><b>TOTAL</b></td>
+                    <td>{{ gnomad_data.totals.allele_count }}</td>
+                    <td>{{ gnomad_data.totals.allele_number }}</td>
+                    <td>{{ gnomad_data.totals.homozygotes  }}</td>
+                    <td>{{ gnomad_data.totals.allele_freq }}</td>
+                </tr>
+            </tbody>
+        </table>
 {% endblock %}
