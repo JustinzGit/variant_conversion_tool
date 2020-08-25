@@ -78,8 +78,8 @@ def protein(request):
         wt_nt = coding_variants[0][1]
         mt_nt = coding_variants[0][2]
 
-        gnomad_data = Gnomad.get_gnomad_data(strand, chromosome, gdna_start, wt_nt, mt_nt)
-
+        variant_id = Gnomad.get_variant_id(strand, chromosome, gdna_start, wt_nt, mt_nt)
+   
         # Zip variant lists to iterate over together in html
         variants = zip(coding_variants, genomic_variants)
 
@@ -87,7 +87,7 @@ def protein(request):
                     "gene_name": gene.name,
                     "variants": variants,
                     "protein_variant": protein_variant,
-                    "gnomad_data": gnomad_data
+                    "variant_id": variant_id
                 })
 
     return render(request, "conversion/index.html")
