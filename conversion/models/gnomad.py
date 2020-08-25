@@ -2,6 +2,7 @@ import requests
 from django.db import models
 
 class Gnomad(models.Model):
+
     @classmethod
     def convert_nucleotide(cls, nucleotide):
         """
@@ -32,38 +33,35 @@ class Gnomad(models.Model):
     @classmethod
     def gnomad_data(cls, variant_id):
         """
-        Returns gnomAD data for provided variant
+        Returns gnomAD data for provided variant (v3 data set (GRCh38))
         """
 
-        query = """query{{
-            variant(dataset: gnomad_r3, variantId: "{variant_id}") {{
-                genome{{
+        query = """{{
+            variant(dataset: gnomad_r3, variantId: "{variant_id}"){{
+            genome {{
                 ac
                 an
                 ac_hom
-                populations {{
-                    id
-                    ac
-                    an
-                    ac_hom
-                }}
-                }}
-                exome {{
+            populations{{
+                id
                 ac
                 an
                 ac_hom
-                populations {{
-                    id
-                    ac
-                    an
-                    ac_hom
-                }}
-                }}
-                variantId
-                reference_genome
-                rsid
             }}
-            }}""" 
+            }}
+            exome {{
+                ac
+                an
+                ac_hom
+            populations{{
+                id
+                ac
+                an
+                ac_hom
+            }}
+            }}
+        }}
+        }}"""
 
         query = query.format(variant_id=variant_id)
 
@@ -73,52 +71,53 @@ class Gnomad(models.Model):
         # Convert string to JSON object
         response = response.json()
 
-        # Variant was not found in gnomad
-        if "errors" in response:
-            gnomad_data = "variant not found"
-
-        elif response["data"]["variant"]["genome"] is None:
-            gnomad_data = "no genome data exists"
-
-        # Dict to store data from gnomad
-        else:
-            gnomad_data = dict(
-                population = ['African/African-American', 'Amish', 'Latino/Admixed American',
-                'Ashkenazi Jewish','East Asian','Finnish','Non-Finnish European','Other','South Asian'], 
-                allele_count = [], 
-                allele_number = [], 
-                homozygotes = [], 
-                allele_freq = [], 
-                total = [])
-
-            # Collect population data
-            populations = response["data"]["variant"]["genome"]["populations"]
-
-            # Store population data
-            for i in range(0, 27, 3):
-                gnomad_data['allele_count'].append(populations[i]['ac'])
-                gnomad_data['allele_number'].append(populations[i]['an'])
-                gnomad_data['homozygotes'].append(populations[i]['ac_hom'])
-
-            # Calculate allele frequency
-            for i in range(len(gnomad_data['allele_count'])):
-                gnomad_data['allele_freq'].append("{0:.9f}".format(float(gnomad_data['allele_count'][i]/gnomad_data['allele_number'][i])))
-
-            allele_count_total = 0
-            allele_number_total = 0
-            homozygotes_total = 0
-
-            # Calculate totals for population data across ethnicities
-            for i in range(len(gnomad_data['allele_count'])):
-                allele_count_total += int(gnomad_data['allele_count'][i])
-                allele_number_total += int(gnomad_data['allele_number'][i])
-                homozygotes_total += int(gnomad_data['homozygotes'][i])
-            
-            gnomad_data['total'].append(allele_count_total)
-            gnomad_data['total'].append(allele_number_total)
-            gnomad_data['total'].append(homozygotes_total)
-            gnomad_data['total'].append("{0:.9f}".format(float(gnomad_data['total'][0]/gnomad_data['total'][1])))
+        data_source = ["genome", "exome"]
+        gnomad_data = {}
         
+        # Collect both genome and exome data 
+        for source in data_source:
+            key = source
+            if response["data"]["variant"][source] is not None:
+                gnomad_data[key] = {}
+
+                for entry in response["data"]["variant"][source]["populations"]:
+                    gnomad_data[key][entry["id"]] = {
+                        "allele_count": entry["ac"],
+                        "allele_number": entry["an"],
+                        "homozygotes": entry["ac_hom"]   
+                    }
+
+                switch = {
+                    "AFR": "African/African-American",
+                    "AMI": "Amish",
+                    "AMR": "Latino/Admixed American",
+                    "ASJ": "Ashkenazi Jewish",
+                    "EAS": "East Asian",
+                    "FIN": "Finnish",
+                    "NFE": "Non-Finnish European",
+                    "OTH": "Other",
+                    "SAS": "South Asian"
+                }
+
+                # Remove unwanted data, rename keys 
+                for old_key in list(gnomad_data[key]):
+                    if old_key in switch:
+                        new_key = switch.get(old_key, "")
+                        gnomad_data[key][new_key] = gnomad_data[key].pop(old_key)
+                    else:
+                        gnomad_data[key].pop(old_key)
+
+                gnomad_data[key]["totals"] = {
+                    "allele_count": response["data"]["variant"][source]["ac"],
+                    "allele_number": response["data"]["variant"][source]["an"],
+                    "homozygotes": response["data"]["variant"][source]["ac_hom"]
+                }
+
+                allele_frequency = "{0:.9f}".format(float(gnomad_data[key]["totals"]["allele_count"] / gnomad_data[key]["totals"]["allele_number"]))
+                gnomad_data[key]["totals"]["allele_freq"] = allele_frequency
+            else:
+                gnomad_data[key] = None
+
         return gnomad_data
 
     @classmethod
