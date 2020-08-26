@@ -80,10 +80,8 @@
     text-align: center;
 }
 
-#gnomad_table {
+#gnomad_table .table{
     width: 850px;
-    margin-bottom: 25px;
-    /* margin-top: 20px; */
 }
 
 #gnomad_table th, td {
