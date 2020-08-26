@@ -33,9 +33,6 @@ def protein(request):
             mt_allele = request.POST["mt_aa"]
         )
 
-        # Format protein variant according to input 
-        protein_variant = f"p.{wt_aa}{aa_location}{mt_aa}"
-
         # Obtain list of coding variants 
         coding_variants = gene.coding_variants(wt_aa, aa_location, mt_aa)
 

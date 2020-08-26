@@ -74,6 +74,9 @@ class Gene(models.Model):
         ['E', 'Glutamic Acid', 'Glu', 'Negatively-Charged, Acidic', 'Non-Essential']
         ]
     
+    def protein_variant(cls):
+        return f"p.{self.wt_allele}{self.variant_position}{self.mt_allele}"
+        
     @classmethod
     def get_aa_info(cls, amino_acid):
         for aa in cls.aa_info:
