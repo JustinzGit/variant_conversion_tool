@@ -91,13 +91,19 @@ def protein(request):
         # Zip variant lists to iterate over together in html
         variants = zip(coding_variants, genomic_variants)
 
+        # Links to redirect user to genome browser and gnomad
+        browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={chromosome}%3A{gdna_start}"
+        gnomad_link = f"https://gnomad.broadinstitute.org/variant/{variant_id}?dataset=gnomad_r2_1"
+
         return render(request, "conversion/protein.html", {
                     "gene_name": gene.name,
                     "variants": variants,
                     "protein_variant": protein_variant,
                     "variant_id": variant_id,
                     "gnomad_data": gnomad_data,
-                    "title": title
+                    "title": title,
+                    "browser_link": browser_link,
+                    "gnomad_link": gnomad_link
                 })
 
     return render(request, "conversion/index.html")

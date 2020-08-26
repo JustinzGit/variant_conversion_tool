@@ -24,8 +24,18 @@
         </tbody>
     </table>
 
+    <div id="buttons">
+        <div id="browser_button">
+          <a role="button" href={{browser_link}} class="btn btn-success" target="_blank">Genome Browser</a>
+        </div>
+
+        <div id="gnomad_button">
+          <a role="button" href={{gnomad_link}} class="btn btn-dark" target="_blank">gnomAD</a>
+        </div>
+    </div>
+
     <table id="gnomad_table" class="table">
-        <h3>{{ title }}</h3>
+        <h6>{{ title }}</h6>
         <thead class="thead-light">
             <th scope="col">Ethnicity</th>
             <th scope="col">Allele Count</th>
