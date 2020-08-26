@@ -84,7 +84,8 @@ class Gnomad(models.Model):
                     gnomad_data[key][entry["id"]] = {
                         "allele_count": entry["ac"],
                         "allele_number": entry["an"],
-                        "homozygotes": entry["ac_hom"]   
+                        "homozygotes": entry["ac_hom"],
+                        "allele_freq": "{0:.9f}".format(float(entry["ac"] / entry["an"]))
                     }
 
                 switch = {
