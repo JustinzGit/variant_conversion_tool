@@ -2,3 +2,4 @@
 conversion/__pycache__
 conversion/models/__pycache__
 *.pyc
+db.sqlite3
