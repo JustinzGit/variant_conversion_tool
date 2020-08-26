@@ -85,7 +85,7 @@ class Ensemble(models.Model):
         gene_info = Ensemble.objects.filter(gene_name=gene_name).first()
         
         if gene_info is not None:
-            return cls.genomic_information(gene_info.transcript, nt_location)
+            return cls.genomic_information(gene_info.transcript, nt_location, cdna)
             
         else:
             gene_id = cls.gene_id(gene_name)
@@ -95,5 +95,5 @@ class Ensemble(models.Model):
                 gene_name = gene_name,
                 transcript = transcript_id)
 
-            return cls.genomic_information(transcript_id, nt_location)
+            return cls.genomic_information(transcript_id, nt_location, cdna)
         
