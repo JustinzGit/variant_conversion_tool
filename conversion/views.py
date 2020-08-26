@@ -71,6 +71,14 @@ def protein(request):
         browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={chromosome}%3A{gdna_start}"
         gnomad_link = f"https://gnomad.broadinstitute.org/variant/{variant_id}?dataset=gnomad_r2_1"
 
+        wt_codon = gene.wt_codon(coding_variants[0][0])
+        wt_aa_info = Gene.get_aa_info(wt_aa)
+        wt_aa_info = ["".join(wt_codon), wt_aa, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
+
+        mt_codon = gene.mt_codon(coding_variants[0][0], wt_codon, mt_nt)
+        mt_aa_info = Gene.get_aa_info(mt_aa)
+        mt_aa_info = ["".join(mt_codon), mt_aa, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
+
         return render(request, "conversion/protein.html", {
                     "gene_name": gene.name,
                     "variants": variants,
@@ -79,7 +87,9 @@ def protein(request):
                     "gnomad_data": gnomad_data,
                     "title": title,
                     "browser_link": browser_link,
-                    "gnomad_link": gnomad_link
+                    "gnomad_link": gnomad_link,
+                    "wt_aa_info": wt_aa_info,
+                    "mt_aa_info": mt_aa_info
                 })
 
     return render(request, "conversion/index.html")
