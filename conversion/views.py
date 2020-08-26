@@ -81,9 +81,11 @@ def protein(request):
         gnomad_data = Gnomad.get_gnomad_data(strand, chromosome, gdna_start, wt_nt, mt_nt)
 
         if gnomad_data['genome'] is not None:
+            title = f"{variant_id} - gnomAd - Genomes"
             gnomad_data = gnomad_data['genome']
 
         else:
+            title = f"{variant_id} - gnomAd - Exomes"
             gnomad_data = gnomad_data['exome']
     
         # Zip variant lists to iterate over together in html
@@ -94,7 +96,8 @@ def protein(request):
                     "variants": variants,
                     "protein_variant": protein_variant,
                     "variant_id": variant_id,
-                    "gnomad_data": gnomad_data
+                    "gnomad_data": gnomad_data,
+                    "title": title
                 })
 
     return render(request, "conversion/index.html")
