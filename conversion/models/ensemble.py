@@ -41,9 +41,9 @@ class Ensemble(models.Model):
 
 
     @classmethod
-    def genomic_information(cls, transcript_id, nt_position):
+    def genomic_hg38(cls, transcript_id, nt_position):
         """
-        Use ensemble API to genomic information (hg38)
+        Use ensemble API to obtain genomic information (hg38)
         http://europepmc.org/article/MED/25236461?singleResult=true
         """
         
