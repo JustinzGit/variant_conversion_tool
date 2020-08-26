@@ -13,7 +13,7 @@ class Ensemble(models.Model):
         """
 
         # Request gene information
-        request = f"https://rest.ensembl.org/lookup/symbol/homo_sapiens/{gene_name}?expand=1"
+        request = f"https://grch37.rest.ensembl.org/lookup/symbol/homo_sapiens/{gene_name}?expand=1"
         response = requests.get(request, headers={ "Content-Type" : "application/json"})
 
         # Convert string to JSON object
@@ -30,7 +30,7 @@ class Ensemble(models.Model):
         """
 
         # Request gene information 
-        request = f"https://rest.ensembl.org/lookup/id/{gene_id}?expand=1"
+        request = f"https://grch37.rest.ensembl.org/lookup/id/{gene_id}?expand=1"
         response = requests.get(request, headers={ "Content-Type" : "application/json"})
 
         # Convert string to JSON object
@@ -39,19 +39,15 @@ class Ensemble(models.Model):
         # Obtain the first transcript ID of acquired gene ID
         return repr(response["Transcript"][0]["id"]).replace("'","")
 
-
     @classmethod
-    def genomic_information(cls, transcript_id, nt_position, assembly):
+    def genomic_information(cls, transcript_id, nt_position):
         """
-        Use ensemble API to obtain genomic information
+        Use ensemble API to obtain genomic information (GRCh37)
         http://europepmc.org/article/MED/25236461?singleResult=true
-
-        For GRCh38 assembly param should equal cds
-        For GRCh37 assembly param should equal cdna
         """
 
         # Request genomic information 
-        request = f"https://rest.ensembl.org/map/{assembly}/{transcript_id}/{nt_position}..{nt_position}"
+        request = f"https://grch37.rest.ensembl.org/map/cds/{transcript_id}/{nt_position}..{nt_position}"
         response = requests.get(request, headers={ "Content-Type" : "application/json"})
 
         # Convert string to JSON object
@@ -81,11 +77,11 @@ class Ensemble(models.Model):
         return response['mappings'][0]['mapped']['start']
 
     @classmethod
-    def get_genomic_info(cls, gene_name, nt_location, assembly):
+    def get_genomic_info(cls, gene_name, nt_location):
         gene_info = Ensemble.objects.filter(gene_name=gene_name).first()
         
         if gene_info is not None:
-            return cls.genomic_information(gene_info.transcript, nt_location, assembly)
+            return cls.genomic_information(gene_info.transcript, nt_location)
             
         else:
             gene_id = cls.gene_id(gene_name)
@@ -95,5 +91,5 @@ class Ensemble(models.Model):
                 gene_name = gene_name,
                 transcript = transcript_id)
 
-            return cls.genomic_information(transcript_id, nt_location, assembly)
+            return cls.genomic_information(transcript_id, nt_location)
         

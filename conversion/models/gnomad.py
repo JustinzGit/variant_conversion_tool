@@ -33,11 +33,11 @@ class Gnomad(models.Model):
     @classmethod
     def gnomad_data(cls, variant_id):
         """
-        Returns gnomAD data for provided variant (v3 data set (GRCh38))
+        Returns gnomAD data for provided variant (v2_1 data set (GRCh37))
         """
 
         query = """{{
-            variant(dataset: gnomad_r3, variantId: "{variant_id}"){{
+            variant(dataset: gnomad_r2_1, variantId: "{variant_id}"){{
             genome {{
                 ac
                 an
