@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for coding, genomic in variants %}
+        {% for coding, genomic, variant_id in variants %}
             <tr>
                 <td>{{ gene_name }}</td>
                 <td>{{ protein_variant }}</td>
@@ -76,34 +76,38 @@
         </tbody>
     </table>
 
-    <table id="gnomad_table" class="table">
-      <h3>{{ title }}</h3>
-      <thead class="thead-dark">
-          <th scope="col">Ethnicity</th>
-          <th scope="col">Allele Count</th>
-          <th scope="col">Allele Number</th>
-          <th scope="col">Homozygotes</th>
-          <th scope="col">Allele Frequency</th>
-      </thead>
-      <tbody>
-      {% for key, values in gnomad_data.items %}
-          {% if key != 'totals' %}
-              <tr>
-                  <td>{{ key }}</td>
-                  <td>{{ values.allele_count }}</td>
-                  <td>{{ values.allele_number }}</td>
-                  <td>{{ values.homozygotes }}</td>
-                  <td>{{ values.allele_freq }}</td>
-              </tr>
-          {% endif %}
-      {% endfor %}
-      <tr>
-          <td><b>TOTAL</b></td>
-          <td>{{ gnomad_data.totals.allele_count }}</td>
-          <td>{{ gnomad_data.totals.allele_number }}</td>
-          <td>{{ gnomad_data.totals.homozygotes  }}</td>
-          <td>{{ gnomad_data.totals.allele_freq }}</td>
-      </tr>
-      </tbody>
-    </table>
+    {% if gnomad_data %}
+      <table id="gnomad_table" class="table">
+        <h3>{{ title }}</h3>
+        <thead class="thead-dark">
+            <th scope="col">Ethnicity</th>
+            <th scope="col">Allele Count</th>
+            <th scope="col">Allele Number</th>
+            <th scope="col">Homozygotes</th>
+            <th scope="col">Allele Frequency</th>
+        </thead>
+        <tbody>
+        {% for key, values in gnomad_data.items %}
+            {% if key != 'totals' %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ values.allele_count }}</td>
+                    <td>{{ values.allele_number }}</td>
+                    <td>{{ values.homozygotes }}</td>
+                    <td>{{ values.allele_freq }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        <tr>
+            <td><b>TOTAL</b></td>
+            <td>{{ gnomad_data.totals.allele_count }}</td>
+            <td>{{ gnomad_data.totals.allele_number }}</td>
+            <td>{{ gnomad_data.totals.homozygotes  }}</td>
+            <td>{{ gnomad_data.totals.allele_freq }}</td>
+        </tr>
+        </tbody>
+      </table>
+    {% else %}
+      <h3>{{ variant_id }} Not in gnomAD</h3>
+    {% endif %}
 {% endblock %}
