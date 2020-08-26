@@ -42,8 +42,11 @@ def protein(request):
         # Obtain variant Ids for gnomAD
         var_ids = gene.variant_ids(genomic_variants, coding_variants)
 
-        gnomad_data = Gnomad.get_gnomad_data(strand, chromosome, gdna_start, wt_nt, mt_nt)
-        
+        # Collect gnomad data for each variant id
+        gnomad_data = []
+        for variant_id in var_ids:
+            gnomad_data.append(Gnomad.gnomad_data(variant_id))
+
         if gnomad_data['genome'] is not None:
             title = f"{variant_id} - gnomAd - Genomes"
             gnomad_data = gnomad_data['genome']
