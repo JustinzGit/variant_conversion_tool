@@ -74,7 +74,7 @@ class Gene(models.Model):
         ['E', 'Glutamic Acid', 'Glu', 'Negatively-Charged, Acidic', 'Non-Essential']
         ]
     
-    def protein_variant(cls):
+    def protein_variant(self):
         return f"p.{self.wt_allele}{self.variant_position}{self.mt_allele}"
         
     @classmethod
@@ -116,23 +116,23 @@ class Gene(models.Model):
         mt_codon[(aa_position - 1) % 3] = mt_nt
         return mt_codon
 
-    def protein_variant(self, wt_nt, position, mt_nt):
-        """
-        Return protein variant as result of nucleotide change
-        """
+    # def protein_variant(self, wt_nt, position, mt_nt):
+    #     """
+    #     Return protein variant as result of nucleotide change
+    #     """
 
-        # Obtain the WT codon
-        wt_codon = self.wt_codon(position)
+    #     # Obtain the WT codon
+    #     wt_codon = self.wt_codon(position)
 
-        # Mutate the WT codon
-        mt_codon = self.mt_codon(position, wt_codon, mt_nt)
+    #     # Mutate the WT codon
+    #     mt_codon = self.mt_codon(position, wt_codon, mt_nt)
 
-        # Convert WT/M codon lists to strings
-        wt_codon = "".join(wt_codon)
-        mt_codon = "".join(mt_codon)
+    #     # Convert WT/M codon lists to strings
+    #     wt_codon = "".join(wt_codon)
+    #     mt_codon = "".join(mt_codon)
 
-        table = Gene.codon_table
-        return f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
+    #     table = Gene.codon_table
+    #     return f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
 
     @classmethod
     def mutant_codon_list(cls, wt_codon, mt_aa):
@@ -171,7 +171,8 @@ class Gene(models.Model):
 
     def coding_variants(self, wt_aa, aa_location, mt_aa):
         """
-        Return potential coding variants as result of protein change 
+        Returns potential coding variants as a result of amino acid change
+        Returns a nested list [variant, wt_nt, mt_nt] 
         """
 
         # Convert position to integer
