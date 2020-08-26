@@ -36,10 +36,8 @@ def protein(request):
         # Obtain list of coding variants 
         coding_variants = gene.coding_variants(wt_aa, aa_location, mt_aa)
 
-        # Fetch genomic information for each potential coding variant
-        genomic_variants = []
-        for variant in coding_variants:
-            genomic_variants.append(Ensemble.get_genomic_info(gene.name, variant[0]))
+        # Obtain list of genomic variants
+        genomic_variants = gene.genomic_variants()
 
         # Using first variant in genomic / coding variants list to collect data from gnomAD
         strand = genomic_variants[0]["strand"]

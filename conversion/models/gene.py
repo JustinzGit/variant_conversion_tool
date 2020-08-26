@@ -1,4 +1,5 @@
 from django.db import models
+from .ensemble import Ensemble
 
 class Gene(models.Model):
     def __init__(self, name, cdna_seq, wt_allele, variant_position, mt_allele):
@@ -217,4 +218,21 @@ class Gene(models.Model):
             coding_variants.append([nt_change, wt_nt, mt_nt])
 
         return coding_variants
-    
+
+    def genomic_variants(self):
+        """
+        Returns genomic information for each coding variant
+        Returns a nested list [chromosome, gdna_start, assembly, strand] 
+        """
+
+        # List to hold genomic variants
+        genomic_variants = []
+
+        # Obtain list of coding variants
+        coding_variants = self.coding_variants(self.wt_allele, self.variant_position, self.mt_allele)
+
+        # Obtain genomic variant for each coding variant
+        for variant in coding_variants:
+            genomic_variants.append(Ensemble.get_genomic_info(self.name, variant[0]))
+        
+        return genomic_variants
