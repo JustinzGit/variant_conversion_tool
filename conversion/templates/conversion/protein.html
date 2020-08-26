@@ -12,21 +12,19 @@
             </tr>
         </thead>
         <tbody>
-            {% for coding, genomic in variants %}
-                <tr>
-                    <td style="width: 200px">{{ gene_name }}</td>
-                    <td style="width: 200px">{{ protein_variant }}</td>
-                    <td style="width: 200px"> c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
-                    <td style="width: 200px"> {{ genomic.assembly }} Chr{{genomic.chromosome}}:{{genomic.gdna_start}} {{ coding.1 }}/{{ coding.2}}</td>
-                    <td style="width: 200px"> {{ variant_id }} </td>
-                </tr>
-            {% endfor %}
+        {% for coding, genomic in variants %}
+            <tr>
+                <td>{{ gene_name }}</td>
+                <td>{{ protein_variant }}</td>
+                <td> c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
+                <td> {{ genomic.assembly }} Chr{{genomic.chromosome}}:{{genomic.gdna_start}} {{ coding.1 }}/{{ coding.2}}</td>
+                <td> {{ variant_id }} </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
-    <u><h1 id="gnomad_title">Gnomad Data</h1></u>
     <table id="gnomad_table" class="table">
-        <!-- <p id="variant_title">Variant {{variant_id}}</p> -->
         <thead class="thead-light">
             <th scope="col">Ethnicity</th>
             <th scope="col">Allele Count</th>
@@ -39,7 +37,6 @@
             {% if key != 'totals' %}
                 <tr>
                     <td>{{ key }}</td>
-                    <td>{{ values.allele_count }}</td>
                     <td>{{ values.allele_count }}</td>
                     <td>{{ values.allele_number }}</td>
                     <td>{{ values.homozygotes }}</td>
