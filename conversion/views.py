@@ -39,22 +39,10 @@ def protein(request):
         # Obtain list of genomic variants
         genomic_variants = gene.genomic_variants()
 
-        # Using first variant in genomic / coding variants list to collect data from gnomAD
-        strand = genomic_variants[0]["strand"]
-        gdna_start = genomic_variants[0]["gdna_start"]
-        chromosome = genomic_variants[0]["chromosome"]
-        
-        wt_nt = coding_variants[0][1]
-        mt_nt = coding_variants[0][2]
-
-        variant_ids = []
-        for variant in genomic_variants:
-            variant_ids.append(Gnomad.get_variant_id(variant["strand"], variant["chromosome"], 
-            variant["gdna_start"], wt_nt, mt_nt))
+        # Obtain variant Ids for gnomAD
+        var_ids = gene.variant_ids(genomic_variants, coding_variants)
 
         gnomad_data = Gnomad.get_gnomad_data(strand, chromosome, gdna_start, wt_nt, mt_nt)
-
-        variant_id = Gnomad.get_variant_id(variant["strand"], variant["chromosome"], variant["gdna_start"], wt_nt, mt_nt)
         
         if gnomad_data['genome'] is not None:
             title = f"{variant_id} - gnomAd - Genomes"

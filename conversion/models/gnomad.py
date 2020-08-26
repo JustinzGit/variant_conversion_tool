@@ -4,35 +4,6 @@ from django.db import models
 class Gnomad(models.Model):
 
     @classmethod
-    def convert_nucleotide(cls, nucleotide):
-        """
-        Convert nucleotide to its binding partner
-        """
-        switch = {
-        "A": "T",
-        "T": "A",
-        "C": "G",
-        "G": "C"
-        }
-
-        return switch.get(nucleotide,"")
-
-    # {'chromosome': '17', 'gdna_start': '40481448', 'assembly': 'GRCh37', 'strand': '-1'}
-    @classmethod
-    def get_variant_id(cls, strand, chromosome, gdna_start, wt_nt, mt_nt):
-        """
-        Returns variant in a format recognized by gnomad
-        """
-
-        # If gene is on negative strand, convert nucleotides
-        if int(strand) < 0:
-            wt_nt = cls.convert_nucleotide(wt_nt)
-            mt_nt = cls.convert_nucleotide(mt_nt)
-
-        return f"{chromosome}-{gdna_start}-{wt_nt}-{mt_nt}"
-
-    # '17-40481448-G-A'
-    @classmethod
     def gnomad_data(cls, variant_id):
         """
         Returns gnomAD data for provided variant (v2_1 data set (GRCh37))

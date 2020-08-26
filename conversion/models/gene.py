@@ -236,3 +236,33 @@ class Gene(models.Model):
             genomic_variants.append(Ensemble.get_genomic_info(self.name, variant[0]))
         
         return genomic_variants
+
+    @classmethod
+    def convert_nucleotide(cls, nucleotide):
+        """
+        Convert nucleotide to its binding partner
+        """
+        switch = {
+        "A": "T",
+        "T": "A",
+        "C": "G",
+        "G": "C"
+        }
+
+        return switch.get(nucleotide,"")
+
+    def variant_ids(self, genomic_variants, coding_variants):
+        # List to hold variant IDs
+        variant_ids = []
+
+        for genomic, coding in zip(genomic_variants, coding_variants):
+            if int(genomic["strand"]) < 0:
+                wt_nt = Gene.convert_nucleotide(coding[1])
+                mt_nt = Gene.convert_nucleotide(coding[2])
+            else:
+                wt_nt = coding[1]
+                mt_nt = coding[2]
+
+            variant_ids.append(f"{genomic['chromosome']}-{genomic['gdna_start']}-{wt_nt}-{mt_nt}")
+
+        return variant_ids
