@@ -87,20 +87,27 @@ class Gene(models.Model):
                 codon_seq.append(codon)   
 
         return codon_seq
+    
+    def wt_codon(self, position):
+        codon_position = int((position - 1) / 3)
+        codon_seq = self.codon_seq()
+        return codon_seq[codon_position]
+
+    def mt_codon(self, position, wt_codon, mt_nt):
+        mt_codon = wt_codon.copy()
+        mt_codon[(position - 1) % 3] = mt_nt
+        return mt_codon
 
     def protein_variant(self, wt_nt, position, mt_nt):
         """
         Return protein variant as result of nucleotide change
         """
-        
+
         # Obtain the WT codon
-        codon_position = int((position - 1) / 3)
-        codon_seq = self.codon_seq()
-        wt_codon = codon_seq[codon_position]
+        wt_codon = self.wt_codon(position)
 
         # Mutate the WT codon
-        mt_codon = wt_codon.copy()
-        mt_codon[(position - 1) % 3] = mt_nt
+        mt_codon = self.mt_codon(position, wt_codon, mt_nt)
 
         # Convert WT/M codon lists to strings
         wt_codon = "".join(wt_codon)
