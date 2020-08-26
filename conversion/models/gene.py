@@ -70,7 +70,13 @@ class Gene(models.Model):
         ['D', 'Aspartic Acid', 'Asp', 'Negatively-Charged, Acidic', 'Non-Essential'],
         ['E', 'Glutamic Acid', 'Glu', 'Negatively-Charged, Acidic', 'Non-Essential']
         ]
-        
+    
+    @classmethod
+    def get_aa_info(cls, amino_acid):
+        for aa in cls.aa_info:
+            if aa[0] == amino_acid:
+                return aa
+
     def codon_seq(self):
         """
         Returns a nested list of codons
