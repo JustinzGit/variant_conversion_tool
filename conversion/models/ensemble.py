@@ -41,14 +41,17 @@ class Ensemble(models.Model):
 
 
     @classmethod
-    def genomic_hg38(cls, transcript_id, nt_position):
+    def genomic_information(cls, transcript_id, nt_position, assembly):
         """
-        Use ensemble API to obtain genomic information (hg38)
+        Use ensemble API to obtain genomic information
         http://europepmc.org/article/MED/25236461?singleResult=true
+
+        For GRCh38 assembly param should equal cds
+        For GRCh37 assembly param should equal cdna
         """
-        
+
         # Request genomic information 
-        request = f"https://rest.ensembl.org/map/cds/{transcript_id}/{nt_position}..{nt_position}"
+        request = f"https://rest.ensembl.org/map/{assembly}/{transcript_id}/{nt_position}..{nt_position}"
         response = requests.get(request, headers={ "Content-Type" : "application/json"})
 
         # Convert string to JSON object
