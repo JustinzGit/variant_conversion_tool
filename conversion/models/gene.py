@@ -1,9 +1,12 @@
 from django.db import models
 
 class Gene(models.Model):
-    def __init__(self, name, cdna_seq):
+    def __init__(self, name, cdna_seq, wt_allele, variant_position, mt_allele):
         self.name = name
         self.cdna_seq = cdna_seq
+        self.wt_allele = wt_allele
+        self.variant_position = variant_position
+        self.mt_allele = mt_allele
 
     codon_table = {
         'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',

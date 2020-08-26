@@ -27,13 +27,11 @@ def protein(request):
 
         gene = Gene(
             name = request.POST["gene_name"],
-            cdna_seq = cdna_seq
+            cdna_seq = cdna_seq,
+            wt_allele = request.POST["wt_aa"],
+            variant_position = request.POST["aa_location"],
+            mt_allele = request.POST["mt_aa"]
         )
-
-        # Ensure user has submitted these
-        wt_aa = request.POST["wt_aa"]
-        aa_location = request.POST["aa_location"]
-        mt_aa = request.POST["mt_aa"]
 
         # Format protein variant according to input 
         protein_variant = f"p.{wt_aa}{aa_location}{mt_aa}"
