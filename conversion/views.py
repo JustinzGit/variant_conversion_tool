@@ -50,12 +50,19 @@ def protein(request):
         strand = genomic_variants[0]["strand"]
         gdna_start = genomic_variants[0]["gdna_start"]
         chromosome = genomic_variants[0]["chromosome"]
+        
         wt_nt = coding_variants[0][1]
         mt_nt = coding_variants[0][2]
 
-        variant_id = Gnomad.get_variant_id(strand, chromosome, gdna_start, wt_nt, mt_nt)
+        variant_ids = []
+        for variant in genomic_variants:
+            variant_ids.append(Gnomad.get_variant_id(variant["strand"], variant["chromosome"], 
+            variant["gdna_start"], wt_nt, mt_nt))
+
         gnomad_data = Gnomad.get_gnomad_data(strand, chromosome, gdna_start, wt_nt, mt_nt)
 
+        variant_id = Gnomad.get_variant_id(variant["strand"], variant["chromosome"], variant["gdna_start"], wt_nt, mt_nt)
+        
         if gnomad_data['genome'] is not None:
             title = f"{variant_id} - gnomAd - Genomes"
             gnomad_data = gnomad_data['genome']
@@ -65,7 +72,7 @@ def protein(request):
             gnomad_data = gnomad_data['exome']
     
         # Zip variant lists to iterate over together in html
-        variants = zip(coding_variants, genomic_variants)
+        variants = zip(coding_variants, genomic_variants, variant_ids)
 
         # Links to redirect user to genome browser and gnomad
         browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={chromosome}%3A{gdna_start}"
@@ -75,7 +82,6 @@ def protein(request):
         wt_aa_info = Gene.get_aa_info(wt_aa)
         wt_aa_info = ["".join(wt_codon), wt_aa, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
 
-        
         mt_codons = ", ".join(Gene.mutant_codon_list(wt_codon, mt_aa))
         mt_aa_info = Gene.get_aa_info(mt_aa)
         mt_aa_info = [mt_codons, mt_aa, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
