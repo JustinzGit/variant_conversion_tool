@@ -83,9 +83,22 @@
 #gnomad_table {
     width: 850px;
     margin-bottom: 25px;
-    margin-top: 0px;
+    /* margin-top: 20px; */
 }
 
 #gnomad_table th, td {
     text-align: center;
+}
+
+#buttons, #browser_button, #gnomad_button {
+    float: left;
+    padding-bottom: 15px;
+}
+
+#browser_button {
+    margin-left: 456px;
+}
+
+#gnomad_button{
+    margin-left: 105px;
 }
