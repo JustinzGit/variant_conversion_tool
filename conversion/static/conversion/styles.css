@@ -73,9 +73,19 @@
   }
 
 #variant_table, #aa_table{
-    width: 80%;
+    width: 850px;
 }
 
 #variant_table, #aa_table th, td{
+    text-align: center;
+}
+
+#gnomad_table {
+    width: 850px;
+    margin-bottom: 25px;
+    margin-top: 0px;
+}
+
+#gnomad_table th, td {
     text-align: center;
 }
