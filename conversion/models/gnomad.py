@@ -17,6 +17,7 @@ class Gnomad(models.Model):
 
         return switch.get(nucleotide,"")
 
+    # {'chromosome': '17', 'gdna_start': '40481448', 'assembly': 'GRCh37', 'strand': '-1'}
     @classmethod
     def get_variant_id(cls, strand, chromosome, gdna_start, wt_nt, mt_nt):
         """
@@ -30,6 +31,7 @@ class Gnomad(models.Model):
 
         return f"{chromosome}-{gdna_start}-{wt_nt}-{mt_nt}"
 
+    # '17-40481448-G-A'
     @classmethod
     def gnomad_data(cls, variant_id):
         """
@@ -77,7 +79,10 @@ class Gnomad(models.Model):
         # Collect both genome and exome data 
         for source in data_source:
             key = source
-            if response["data"]["variant"][source] is not None:
+            if response["errors"]:
+                gnomad_data[key] = None
+                
+            elif response["data"]["variant"][source] is not None:
                 gnomad_data[key] = {}
 
                 for entry in response["data"]["variant"][source]["populations"]:
