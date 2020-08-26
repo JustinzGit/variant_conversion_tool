@@ -75,9 +75,10 @@ def protein(request):
         wt_aa_info = Gene.get_aa_info(wt_aa)
         wt_aa_info = ["".join(wt_codon), wt_aa, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
 
-        mt_codon = gene.mt_codon(coding_variants[0][0], wt_codon, mt_nt)
+        
+        mt_codons = ", ".join(Gene.mutant_codon_list(wt_codon, mt_aa))
         mt_aa_info = Gene.get_aa_info(mt_aa)
-        mt_aa_info = ["".join(mt_codon), mt_aa, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
+        mt_aa_info = [mt_codons, mt_aa, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
 
         return render(request, "conversion/protein.html", {
                     "gene_name": gene.name,
