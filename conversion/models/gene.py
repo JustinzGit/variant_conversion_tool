@@ -94,14 +94,20 @@ class Gene(models.Model):
 
         return codon_seq
     
-    def wt_codon(self, position):
-        codon_position = int((position - 1) / 3)
+    def wt_codon(self, aa_position):
+        """
+        Returns WT Codon based on amino acid position
+        """
+        codon_position = int((aa_position - 1) / 3)
         codon_seq = self.codon_seq()
         return codon_seq[codon_position]
 
-    def mt_codon(self, position, wt_codon, mt_nt):
+    def mt_codon(self, aa_position, wt_codon, mt_nt):
+        """
+        Returns MT Codon based on amino acid position
+        """
         mt_codon = wt_codon.copy()
-        mt_codon[(position - 1) % 3] = mt_nt
+        mt_codon[(aa_position - 1) % 3] = mt_nt
         return mt_codon
 
     def protein_variant(self, wt_nt, position, mt_nt):
