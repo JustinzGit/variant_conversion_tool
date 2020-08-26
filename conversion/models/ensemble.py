@@ -81,11 +81,11 @@ class Ensemble(models.Model):
         return response['mappings'][0]['mapped']['start']
 
     @classmethod
-    def get_genomic_info(cls, gene_name, nt_location):
+    def get_genomic_info(cls, gene_name, nt_location, assembly):
         gene_info = Ensemble.objects.filter(gene_name=gene_name).first()
         
         if gene_info is not None:
-            return cls.genomic_information(gene_info.transcript, nt_location, cdna)
+            return cls.genomic_information(gene_info.transcript, nt_location, assembly)
             
         else:
             gene_id = cls.gene_id(gene_name)
@@ -95,5 +95,5 @@ class Ensemble(models.Model):
                 gene_name = gene_name,
                 transcript = transcript_id)
 
-            return cls.genomic_information(transcript_id, nt_location, cdna)
+            return cls.genomic_information(transcript_id, nt_location, assembly)
         
