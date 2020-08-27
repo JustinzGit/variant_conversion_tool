@@ -39,7 +39,7 @@ def protein(request):
         # Obtain list of genomic variants
         genomic_variants = gene.genomic_variants()
 
-        # Obtain variant Ids for gnomAD
+        # Obtain list of variant Ids for gnomAD
         var_ids = gene.variant_ids(genomic_variants, coding_variants)
 
         # Collect gnomad data for each variant id
@@ -51,10 +51,10 @@ def protein(request):
         variants = zip(coding_variants, genomic_variants, var_ids)
 
         # Links to redirect user to genome browser and gnomad
-        browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={genomic_variants[0]['chromosome']}%3A{genomic_variants[0]['gdna_start']}"
-        gnomad_link = f"https://gnomad.broadinstitute.org/variant/{var_ids[0]}?dataset=gnomad_r2_1"
+        # browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={genomic_variants[0]['chromosome']}%3A{genomic_variants[0]['gdna_start']}"
+        # gnomad_link = f"https://gnomad.broadinstitute.org/variant/{var_ids[0]}?dataset=gnomad_r2_1"
 
-        wt_codon = "".join(gene.wt_codon(coding_variants[0][0]))
+        wt_codon = "".join(gene.wt_codon(gene.variant_position))
 
         wt_aa_info = Gene.get_aa_info(gene.wt_allele)
         wt_aa_info = [wt_codon, gene.wt_allele, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
@@ -68,8 +68,8 @@ def protein(request):
                     "gene": gene,
                     "variants": variants,
                     "gnomad_data": gnomad_data,
-                    "browser_link": browser_link,
-                    "gnomad_link": gnomad_link,
+                    # "browser_link": browser_link,
+                    # "gnomad_link": gnomad_link,
                     "wt_aa_info": wt_aa_info,
                     "mt_aa_info": mt_aa_info
                 })
