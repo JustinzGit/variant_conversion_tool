@@ -14,11 +14,11 @@
         <tbody>
         {% for coding, genomic, variant_id in variants %}
             <tr>
-                <td>{{ gene_name }}</td>
-                <td>{{ protein_variant }}</td>
-                <td> c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
-                <td> {{ genomic.assembly }} Chr{{genomic.chromosome}}:{{genomic.gdna_start}} {{ coding.1 }}/{{ coding.2}}</td>
-                <td> {{ variant_id }} </td>
+                <td>{{ gene.name }}</td>
+                <td>{{ gene.protein_variant}}</td>
+                <td>c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
+                <td>{{ genomic.assembly }} Chr{{genomic.chromosome }}:{{genomic.gdna_start }} {{ coding.1 }}/{{ coding.2}}</td>
+                <td>{{ variant_id }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -76,7 +76,7 @@
         </tbody>
     </table>
 
-    {% if gnomad_data %}
+    {% for data in gnomad_data %}
       <table id="gnomad_table" class="table">
         <h3>{{ title }}</h3>
         <thead class="thead-dark">
@@ -100,14 +100,12 @@
         {% endfor %}
         <tr>
             <td><b>TOTAL</b></td>
-            <td>{{ gnomad_data.totals.allele_count }}</td>
-            <td>{{ gnomad_data.totals.allele_number }}</td>
-            <td>{{ gnomad_data.totals.homozygotes  }}</td>
-            <td>{{ gnomad_data.totals.allele_freq }}</td>
+            <td>{{ data.totals.allele_count }}</td>
+            <td>{{ data.totals.allele_number }}</td>
+            <td>{{ data.totals.homozygotes  }}</td>
+            <td>{{ data.totals.allele_freq }}</td>
         </tr>
         </tbody>
       </table>
-    {% else %}
-      <h3>{{ variant_id }} Not in gnomAD</h3>
-    {% endif %}
+    {% endfor %}
 {% endblock %}
