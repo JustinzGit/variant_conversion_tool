@@ -24,7 +24,7 @@
         </tbody>
     </table>
 
-    <div id="buttons">
+    <!-- <div id="buttons">
         <div id="browser_button">
           <a role="button" href={{browser_link}} class="btn btn-success" target="_blank">Genome Browser</a>
         </div>
@@ -32,7 +32,7 @@
         <div id="gnomad_button">
           <a role="button" href={{gnomad_link}} class="btn btn-dark" target="_blank">gnomAD</a>
         </div>
-    </div>
+    </div> -->
 
     <table style="margin-top: 100px" id="aa_table" class="table">
         <thead class="thead-light">
@@ -75,37 +75,39 @@
           </tr>
         </tbody>
     </table>
-
-    {% for data in gnomad_data %}
-      <table id="gnomad_table" class="table">
-        <h3>{{ title }}</h3>
-        <thead class="thead-dark">
-            <th scope="col">Ethnicity</th>
-            <th scope="col">Allele Count</th>
-            <th scope="col">Allele Number</th>
-            <th scope="col">Homozygotes</th>
-            <th scope="col">Allele Frequency</th>
-        </thead>
-        <tbody>
-        {% for key, values in gnomad_data.items %}
-            {% if key != 'totals' %}
+    
+    {% for variant_id, data in gnomad_data.items %}
+      {% for data_source, population in data.items %}
+        <h3>{{ variant_id }}-gnomAD-{{ data_source }}</h3>
+        <table id="gnomad_table" class="table" style="width: 850px">
+          <thead class="thead-dark">
+              <th scope="col">Ethnicity</th>
+              <th scope="col">Allele Count</th>
+              <th scope="col">Allele Number</th>
+              <th scope="col">Homozygotes</th>
+              <th scope="col">Allele Frequency</th>
+          </thead>
+          <tbody>
+            {% for key, values in population.items %}
+              {% if key != 'totals' %}
                 <tr>
-                    <td>{{ key }}</td>
-                    <td>{{ values.allele_count }}</td>
-                    <td>{{ values.allele_number }}</td>
-                    <td>{{ values.homozygotes }}</td>
-                    <td>{{ values.allele_freq }}</td>
+                  <td>{{ key }}</td>
+                  <td>{{ values.allele_count }}</td>
+                  <td>{{ values.allele_number }}</td>
+                  <td>{{ values.homozygotes }}</td>
+                  <td>{{ values.allele_freq }}</td>
                 </tr>
-            {% endif %}
-        {% endfor %}
-        <tr>
-            <td><b>TOTAL</b></td>
-            <td>{{ data.totals.allele_count }}</td>
-            <td>{{ data.totals.allele_number }}</td>
-            <td>{{ data.totals.homozygotes  }}</td>
-            <td>{{ data.totals.allele_freq }}</td>
-        </tr>
-        </tbody>
-      </table>
+              {% endif %}
+           {% endfor %}
+            <tr>
+              <td><b>TOTAL</b></td>
+              <td>{{ population.totals.allele_count }}</td>
+              <td>{{ population.totals.allele_number }}</td>
+              <td>{{ population.totals.homozygotes }}</td>
+              <td>{{ population.totals.allele_freq }}</td>
+            </tr>
+          </tbody>
+        </table>
+      {% endfor %}
     {% endfor %}
 {% endblock %}
