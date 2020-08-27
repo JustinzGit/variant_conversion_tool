@@ -43,10 +43,11 @@ def protein(request):
         var_ids = gene.variant_ids(genomic_variants, coding_variants)
 
         # Collect gnomad data for each variant id
-        gnomad_data = []
+        gnomad_data = {}
         for variant_id in var_ids:
-            gnomad_data.append(Gnomad.gnomad_data(variant_id))
-    
+            data = Gnomad.gnomad_data(variant_id)
+            gnomad_data[variant_id] = data[variant_id]
+            
         # Zip variant lists to iterate over together in html
         variants = zip(coding_variants, genomic_variants, var_ids)
 
