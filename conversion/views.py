@@ -46,21 +46,13 @@ def protein(request):
         gnomad_data = []
         for variant_id in var_ids:
             gnomad_data.append(Gnomad.gnomad_data(variant_id))
-
-        if gnomad_data['genome'] is not None:
-            title = f"{variant_id} - gnomAd - Genomes"
-            gnomad_data = gnomad_data['genome']
-
-        else:
-            title = f"{variant_id} - gnomAd - Exomes"
-            gnomad_data = gnomad_data['exome']
     
         # Zip variant lists to iterate over together in html
-        variants = zip(coding_variants, genomic_variants, variant_ids)
+        variants = zip(coding_variants, genomic_variants, var_ids)
 
         # Links to redirect user to genome browser and gnomad
-        browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={chromosome}%3A{gdna_start}"
-        gnomad_link = f"https://gnomad.broadinstitute.org/variant/{variant_id}?dataset=gnomad_r2_1"
+        browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={genomic_variants[0][0]}%3A{genomic_variants[0][1]}"
+        gnomad_link = f"https://gnomad.broadinstitute.org/variant/{var_ids[0]}?dataset=gnomad_r2_1"
 
         wt_codon = gene.wt_codon(coding_variants[0][0])
         wt_aa_info = Gene.get_aa_info(wt_aa)
