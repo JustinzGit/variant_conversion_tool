@@ -46,18 +46,19 @@ class Gnomad(models.Model):
 
         data_source = ["genome", "exome"]
         gnomad_data = {}
+        gnomad_data[variant_id] = {}
         
         # Collect both genome and exome data 
         for source in data_source:
             key = source
             if response["errors"]:
-                gnomad_data[key] = None
+                gnomad_data[variant_id][source] = None
                 
             elif response["data"]["variant"][source] is not None:
-                gnomad_data[key] = {}
+                gnomad_data[variant_id][source] = {}
 
                 for entry in response["data"]["variant"][source]["populations"]:
-                    gnomad_data[key][entry["id"]] = {
+                    gnomad_data[variant_id][source][entry["id"]] = {
                         "allele_count": entry["ac"],
                         "allele_number": entry["an"],
                         "homozygotes": entry["ac_hom"],
@@ -77,22 +78,22 @@ class Gnomad(models.Model):
                 }
 
                 # Remove unwanted data, rename keys 
-                for old_key in list(gnomad_data[key]):
+                for old_key in list(gnomad_data[variant_id][source]):
                     if old_key in switch:
                         new_key = switch.get(old_key, "")
-                        gnomad_data[key][new_key] = gnomad_data[key].pop(old_key)
+                        gnomad_data[variant_id][source][new_key] = gnomad_data[variant_id][source].pop(old_key)
                     else:
-                        gnomad_data[key].pop(old_key)
+                        gnomad_data[variant_id][source].pop(old_key)
 
-                gnomad_data[key]["totals"] = {
+                gnomad_data[variant_id][source]["totals"] = {
                     "allele_count": response["data"]["variant"][source]["ac"],
                     "allele_number": response["data"]["variant"][source]["an"],
                     "homozygotes": response["data"]["variant"][source]["ac_hom"]
                 }
 
-                allele_frequency = "{0:.9f}".format(float(gnomad_data[key]["totals"]["allele_count"] / gnomad_data[key]["totals"]["allele_number"]))
-                gnomad_data[key]["totals"]["allele_freq"] = allele_frequency
+                allele_frequency = "{0:.9f}".format(float(gnomad_data[variant_id][source]["totals"]["allele_count"] / gnomad_data[variant_id][source]["totals"]["allele_number"]))
+                gnomad_data[variant_id][source]["totals"]["allele_freq"] = allele_frequency
             else:
-                gnomad_data[key] = None
+                gnomad_data[variant_id][source] = None
 
         return gnomad_data
