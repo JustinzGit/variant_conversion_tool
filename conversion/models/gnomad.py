@@ -51,7 +51,7 @@ class Gnomad(models.Model):
         # Collect both genome and exome data 
         for source in data_source:
             key = source
-            if response["errors"]:
+            if "errors" in response:
                 gnomad_data[variant_id][source] = None
                 
             elif response["data"]["variant"][source] is not None:
