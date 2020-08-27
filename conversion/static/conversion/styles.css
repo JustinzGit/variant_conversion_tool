@@ -76,15 +76,7 @@
     width: 850px;
 }
 
-#variant_table, #aa_table th, td{
-    text-align: center;
-}
-
-#gnomad_table .table{
-    width: 850px;
-}
-
-#gnomad_table th, td {
+#gnomad_table, #variant_table, #aa_table th, td{
     text-align: center;
 }
 
