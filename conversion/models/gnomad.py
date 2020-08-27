@@ -52,7 +52,7 @@ class Gnomad(models.Model):
         for source in data_source:
             key = source
             if "errors" in response:
-                gnomad_data[variant_id][source] = None
+                gnomad_data[variant_id] = None
                 
             elif response["data"]["variant"][source] is not None:
                 gnomad_data[variant_id][source] = {}
@@ -93,7 +93,5 @@ class Gnomad(models.Model):
 
                 allele_frequency = "{0:.9f}".format(float(gnomad_data[variant_id][source]["totals"]["allele_count"] / gnomad_data[variant_id][source]["totals"]["allele_number"]))
                 gnomad_data[variant_id][source]["totals"]["allele_freq"] = allele_frequency
-            else:
-                gnomad_data[variant_id][source] = None
 
         return gnomad_data
