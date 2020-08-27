@@ -34,7 +34,7 @@ def protein(request):
         )
 
         # Obtain list of coding variants 
-        coding_variants = gene.coding_variants(wt_aa, aa_location, mt_aa)
+        coding_variants = gene.coding_variants(gene.wt_allele, gene.variant_position, gene.mt_allele)
 
         # Obtain list of genomic variants
         genomic_variants = gene.genomic_variants()
@@ -51,24 +51,23 @@ def protein(request):
         variants = zip(coding_variants, genomic_variants, var_ids)
 
         # Links to redirect user to genome browser and gnomad
-        browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={genomic_variants[0][0]}%3A{genomic_variants[0][1]}"
+        browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={genomic_variants[0]['chromosome']}%3A{genomic_variants[0]['gdna_start']}"
         gnomad_link = f"https://gnomad.broadinstitute.org/variant/{var_ids[0]}?dataset=gnomad_r2_1"
 
-        wt_codon = gene.wt_codon(coding_variants[0][0])
-        wt_aa_info = Gene.get_aa_info(wt_aa)
-        wt_aa_info = ["".join(wt_codon), wt_aa, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
+        wt_codon = "".join(gene.wt_codon(coding_variants[0][0]))
 
-        mt_codons = ", ".join(Gene.mutant_codon_list(wt_codon, mt_aa))
-        mt_aa_info = Gene.get_aa_info(mt_aa)
-        mt_aa_info = [mt_codons, mt_aa, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
+        wt_aa_info = Gene.get_aa_info(gene.wt_allele)
+        wt_aa_info = [wt_codon, gene.wt_allele, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
+
+        mt_codons = ", ".join(Gene.mutant_codon_list(wt_codon, gene.mt_allele))
+
+        mt_aa_info = Gene.get_aa_info(gene.mt_allele)
+        mt_aa_info = [mt_codons, gene.mt_allele, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
 
         return render(request, "conversion/protein.html", {
-                    "gene_name": gene.name,
+                    "gene": gene,
                     "variants": variants,
-                    "protein_variant": protein_variant,
-                    "variant_id": variant_id,
                     "gnomad_data": gnomad_data,
-                    "title": title,
                     "browser_link": browser_link,
                     "gnomad_link": gnomad_link,
                     "wt_aa_info": wt_aa_info,
