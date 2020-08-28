@@ -74,4 +74,29 @@ def protein(request):
     return render(request, "conversion/index.html")
 
 def coding(request):
-    pass
+    if request.method == "POST":
+
+        # cDNA seq was submitted as file 
+        if request.FILES.get("cdna_file", False):
+            cdna_seq = request.FILES["cdna_file"].read().decode("utf-8").replace("\n", "").replace("\r", "").upper()
+
+        # cDNA seq was submitted through textbox
+        elif request.POST["cdna_text"]:
+            cdna_seq = request.POST["cdna_text"].upper()
+
+        else:
+            return render(request, "conversion/index.html", {
+                "alert": "A cDNA submission is required",
+            })
+
+        gene = Gene(
+            name = request.POST["gene_name"],
+            cdna_seq = cdna_seq,
+            wt_allele = request.POST["wt_nt"],
+            variant_position = request.POST["nt_location"],
+            mt_allele = request.POST["mt_nt"]
+        )
+        
+        return render(request, "conversion/coding.html")
+
+    return render(request, "conversion/index.html")
