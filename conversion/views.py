@@ -102,6 +102,9 @@ def coding(request):
 
         # Obtain variant id
         variant_id = self.variant_id(genomic_variant)
+
+        # Obtain data from gnomad
+        gnomad_data = Gnomad.gnomad_data(variant_id)
         
         return render(request, "conversion/coding.html")
 
