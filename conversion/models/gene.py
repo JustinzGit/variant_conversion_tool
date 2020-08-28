@@ -105,7 +105,7 @@ class Gene(models.Model):
         """
         Returns WT Codon based on amino acid position
         """
-        codon_position = int((int(aa_position) - 1) / 3)
+        codon_position = int((int(aa_position) - 1))
         codon_seq = self.codon_seq()
         return codon_seq[codon_position]
 
