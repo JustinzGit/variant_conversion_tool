@@ -49,7 +49,7 @@ def protein(request):
         # Zip variant lists to iterate over together in html
         variants = zip(coding_variants, genomic_variants, var_ids)
 
-        wt_codon = "".join(gene.wt_codon(gene.variant_position))
+        wt_codon = gene.wt_codon()
 
         wt_aa_info = Gene.get_aa_info(gene.wt_allele)
         wt_aa_info = [wt_codon, gene.wt_allele, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
