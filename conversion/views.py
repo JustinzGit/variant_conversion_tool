@@ -96,6 +96,9 @@ def coding(request):
             variant_position = request.POST["nt_location"],
             mt_allele = request.POST["mt_nt"]
         )
+
+        # Obtain genomic variant
+        genomic_variant = Ensemble.get_genomic_info(gene.name, gene.variant_position)
         
         return render(request, "conversion/coding.html")
 
