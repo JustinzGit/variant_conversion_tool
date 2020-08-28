@@ -109,6 +109,10 @@ def coding(request):
         # Obtain wt and mt codon
         wt_codon = gene.wt_codon("coding")
         mt_codon = gene.mt_codon(gene.variant_position, wt_codon, gene.mt_allele)
+
+        # Gather amino acid properties 
+        wt_aa_info = Gene.get_aa_info(gene.wt_allele)
+        mt_aa_info = Gene.get_aa_info(gene.mt_allele)
         
         return render(request, "conversion/coding.html")
 
