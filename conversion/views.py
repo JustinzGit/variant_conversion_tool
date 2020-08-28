@@ -6,8 +6,6 @@ def index(request):
         "aa_table": Gene.aa_info
     })
 
-# Variant to test on
-# P715L c.2144 C/T	chr17:40469200	
 
 def protein(request):
     if request.method == "POST":
@@ -50,10 +48,10 @@ def protein(request):
             
         # Zip variant lists to iterate over together in html
         variants = zip(coding_variants, genomic_variants, var_ids)
+      
 
         # Links to redirect user to genome browser and gnomad
         # browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={genomic_variants[0]['chromosome']}%3A{genomic_variants[0]['gdna_start']}"
-        # gnomad_link = f"https://gnomad.broadinstitute.org/variant/{var_ids[0]}?dataset=gnomad_r2_1"
 
         wt_codon = "".join(gene.wt_codon(gene.variant_position))
 

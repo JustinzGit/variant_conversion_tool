@@ -19,20 +19,12 @@
                 <td>c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
                 <td>{{ genomic.assembly }} Chr{{genomic.chromosome }}:{{genomic.gdna_start }} {{ coding.1 }}/{{ coding.2}}</td>
                 <td>{{ variant_id }}</td>
+                <td style="border: none"><a role="button" href="https://gnomad.broadinstitute.org/variant/{{variant_id}}?dataset=gnomad_r2_1" class="btn btn-dark" target="_blank">gnomAD</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <!-- <div id="buttons">
-        <div id="browser_button">
-          <a role="button" href={{browser_link}} class="btn btn-success" target="_blank">Genome Browser</a>
-        </div>
-
-        <div id="gnomad_button">
-          <a role="button" href={{gnomad_link}} class="btn btn-dark" target="_blank">gnomAD</a>
-        </div>
-    </div> -->
 
     <table style="margin-top: 100px" id="aa_table" class="table">
         <thead class="thead-light">
