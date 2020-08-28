@@ -253,15 +253,15 @@ class Gene(models.Model):
 
         return switch.get(nucleotide,"")
 
-    def variant_id(self, chromosome, strand, gdna_start):
-        if int(strand) < 0:
+    def variant_id(self, genomic_variant):
+        if int(genomic_variant["strand"]) < 0:
             wt_nt = Gene.convert_nucleotide(self.wt_allele)
             mt_nt = Gene.convert_nucleotide(self.mt_allele)
         else:
             wt_nt = self.wt_allele
             mt_nt = self.mt_allele
 
-        return f"{chromosome}-{gdna_start}-{wt_nt}-{mt_nt}"
+        return f"{genomic_variant["chromosome"]}-{genomic_variant["gdna_start"]}-{wt_nt}-{mt_nt}"
 
     def variant_ids(self, genomic_variants, coding_variants):
         # List to hold variant IDs
