@@ -101,11 +101,16 @@ class Gene(models.Model):
 
         return codon_seq
     
-    def wt_codon(self):
+    def wt_codon(self, variant_type):
         """
-        Returns WT Codon based on amino acid position
+        Returns WT Codon
         """
-        codon_position = int((int(self.variant_position) - 1))
+        if variant_type == "coding":
+            codon_position = int((int(self.variant_position) - 1) / 3)
+
+        elif variant_type == "protein":
+            codon_position = int((int(self.variant_position) - 1))
+            
         codon_seq = self.codon_seq()
         return "".join(codon_seq[codon_position])
 

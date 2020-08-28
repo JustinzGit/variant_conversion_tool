@@ -50,7 +50,7 @@ def protein(request):
         variants = zip(coding_variants, genomic_variants, var_ids)
 
         # Obtain wt and mt codons
-        wt_codon = gene.wt_codon()
+        wt_codon = gene.wt_codon("protein")
         mt_codons = ", ".join(Gene.mutant_codon_list(wt_codon, gene.mt_allele))
 
         # Gather amino acid properties 
