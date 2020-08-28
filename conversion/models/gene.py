@@ -216,6 +216,21 @@ class Gene(models.Model):
 
         return coding_variants
 
+    def genomic_variant(self):
+        genomic_variant = Ensemble.get_genomic_info(self.name, self.variant_position)
+
+        if int(genomic_variant["strand"]) < 0:
+            wt_nt = Gene.convert_nucleotide(self.wt_allele)
+            mt_nt = Gene.convert_nucleotide(self.mt_allele)
+        
+        else:
+            wt_nt = self.wt_allele
+            mt_nt = self.mt_allele
+
+        return f"{genomic_variant["assembly"]} Chr{genomic_variant["chromosome"]}:{genomic_variant["gdna_start"]} {wt_nt}/{mt_nt}}"
+
+
+
     def genomic_variants(self):
         """
         Returns genomic information for each coding variant

@@ -98,7 +98,7 @@ def coding(request):
         )
 
         # Obtain genomic variant
-        genomic_variant = Ensemble.get_genomic_info(gene.name, gene.variant_position)
+        genomic_variant = gene.genomic_variant()
 
         # Obtain variant id
         variant_id = gene.variant_id(genomic_variant)
@@ -117,6 +117,10 @@ def coding(request):
         wt_aa_info = Gene.get_aa_info(gene.wt_allele)
         mt_aa_info = Gene.get_aa_info(gene.mt_allele)
         
-        return render(request, "conversion/coding.html")
+        return render(request, "conversion/coding.html", {
+            "genomic_variant": genomic_variant,
+            "variant_id": variant_id,
+            "protein_variant": protein_variant
+        })
 
     return render(request, "conversion/index.html")
