@@ -122,23 +122,13 @@ class Gene(models.Model):
         mt_codon[(variant_position - 1) % 3] = mt_nt
         return mt_codon
 
-    # def protein_variant(self, wt_nt, position, mt_nt):
-    #     """
-    #     Return protein variant as result of nucleotide change
-    #     """
-
-    #     # Obtain the WT codon
-    #     wt_codon = self.wt_codon(position)
-
-    #     # Mutate the WT codon
-    #     mt_codon = self.mt_codon(position, wt_codon, mt_nt)
-
-    #     # Convert WT/M codon lists to strings
-    #     wt_codon = "".join(wt_codon)
-    #     mt_codon = "".join(mt_codon)
-
-    #     table = Gene.codon_table
-    #     return f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
+    def protein_variant(self, wt_codon, mt_codon):
+        """
+        Return protein variant as result of nucleotide change
+        """
+        codon_position = int((int(self.variant_position) - 1) / 3)
+        table = Gene.codon_table
+        return f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
 
     @classmethod
     def mutant_codon_list(cls, wt_codon, mt_aa):
