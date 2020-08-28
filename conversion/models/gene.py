@@ -75,8 +75,11 @@ class Gene(models.Model):
         ['E', 'Glutamic Acid', 'Glu', 'Negatively-Charged, Acidic', 'Non-Essential']
         ]
     
-    def protein_variant(self):
-        return f"p.{self.wt_allele}{self.variant_position}{self.mt_allele}"
+    def protein_variant(self, wt_codon, mt_codon):
+        codon_position = int((int(self.variant_position) - 1) / 3)
+        table = Gene.codon_table
+        return f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
+
         
     @classmethod
     def get_aa_info(cls, amino_acid):
@@ -120,15 +123,7 @@ class Gene(models.Model):
         """
         mt_codon = wt_codon.copy()
         mt_codon[(variant_position - 1) % 3] = mt_nt
-        return mt_codon
-
-    def protein_variant(self, wt_codon, mt_codon):
-        """
-        Return protein variant as result of nucleotide change
-        """
-        codon_position = int((int(self.variant_position) - 1) / 3)
-        table = Gene.codon_table
-        return f"p.{table[wt_codon]}{codon_position + 1}{table[mt_codon]}"
+        return mt_codon   
 
     @classmethod
     def mutant_codon_list(cls, wt_codon, mt_aa):
