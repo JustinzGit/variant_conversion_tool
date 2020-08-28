@@ -49,14 +49,16 @@ def protein(request):
         # Zip variant lists to iterate over together in html
         variants = zip(coding_variants, genomic_variants, var_ids)
 
+        # Obtain wt and mt codons
         wt_codon = gene.wt_codon()
-
-        wt_aa_info = Gene.get_aa_info(gene.wt_allele)
-        wt_aa_info = [wt_codon, gene.wt_allele, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
-
         mt_codons = ", ".join(Gene.mutant_codon_list(wt_codon, gene.mt_allele))
 
+        # Gather amino acid properties 
+        wt_aa_info = Gene.get_aa_info(gene.wt_allele)
         mt_aa_info = Gene.get_aa_info(gene.mt_allele)
+
+        # Store amino acid information in list
+        wt_aa_info = [wt_codon, gene.wt_allele, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
         mt_aa_info = [mt_codons, gene.mt_allele, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
 
         return render(request, "conversion/protein.html", {
