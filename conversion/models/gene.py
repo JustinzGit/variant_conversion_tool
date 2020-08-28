@@ -227,7 +227,7 @@ class Gene(models.Model):
             wt_nt = self.wt_allele
             mt_nt = self.mt_allele
 
-        return f"{genomic_variant["assembly"]} Chr{genomic_variant["chromosome"]}:{genomic_variant["gdna_start"]} {wt_nt}/{mt_nt}}"
+        return f"{genomic_variant['assembly']} Chr{genomic_variant['chromosome']}:{genomic_variant['gdna_start']} {wt_nt}/{mt_nt}"
 
 
 
@@ -271,7 +271,7 @@ class Gene(models.Model):
             wt_nt = self.wt_allele
             mt_nt = self.mt_allele
 
-        return f"{genomic_variant["chromosome"]}-{genomic_variant["gdna_start"]}-{wt_nt}-{mt_nt}"
+        return f"{genomic_variant['chromosome']}-{genomic_variant['gdna_start']}-{wt_nt}-{mt_nt}"
 
     def variant_ids(self, genomic_variants, coding_variants):
         # List to hold variant IDs
