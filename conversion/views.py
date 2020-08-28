@@ -101,10 +101,14 @@ def coding(request):
         genomic_variant = Ensemble.get_genomic_info(gene.name, gene.variant_position)
 
         # Obtain variant id
-        variant_id = self.variant_id(genomic_variant)
+        variant_id = gene.variant_id(genomic_variant)
 
         # Obtain data from gnomad
         gnomad_data = Gnomad.gnomad_data(variant_id)
+
+        # Obtain wt and mt codon
+        wt_codon = gene.wt_codon("coding")
+        mt_codon = gene.mt_codon(gene.variant_position, wt_codon, gene.mt_allele)
         
         return render(request, "conversion/coding.html")
 
