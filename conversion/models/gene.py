@@ -110,16 +110,16 @@ class Gene(models.Model):
 
         elif variant_type == "protein":
             codon_position = int((int(self.variant_position) - 1))
-            
+
         codon_seq = self.codon_seq()
         return "".join(codon_seq[codon_position])
 
-    def mt_codon(self, aa_position, wt_codon, mt_nt):
+    def mt_codon(self, variant_position, wt_codon, mt_nt):
         """
-        Returns MT Codon based on amino acid position
+        Returns MT Codon
         """
         mt_codon = wt_codon.copy()
-        mt_codon[(aa_position - 1) % 3] = mt_nt
+        mt_codon[(variant_position - 1) % 3] = mt_nt
         return mt_codon
 
     # def protein_variant(self, wt_nt, position, mt_nt):
