@@ -48,10 +48,6 @@ def protein(request):
             
         # Zip variant lists to iterate over together in html
         variants = zip(coding_variants, genomic_variants, var_ids)
-      
-
-        # Links to redirect user to genome browser and gnomad
-        # browser_link = f"https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={genomic_variants[0]['chromosome']}%3A{genomic_variants[0]['gdna_start']}"
 
         wt_codon = "".join(gene.wt_codon(gene.variant_position))
 
@@ -67,8 +63,8 @@ def protein(request):
                     "gene": gene,
                     "variants": variants,
                     "gnomad_data": gnomad_data,
-                    # "browser_link": browser_link,
-                    # "gnomad_link": gnomad_link,
+                    "chromosome": genomic_variants[0]['chromosome'],
+                    "gdna_start": genomic_variants[0]['gdna_start'],
                     "wt_aa_info": wt_aa_info,
                     "mt_aa_info": mt_aa_info
                 })
