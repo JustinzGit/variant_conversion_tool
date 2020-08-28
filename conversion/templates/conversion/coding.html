@@ -1,0 +1,25 @@
+{% extends "conversion/layout.html" %}
+
+{% block body %}
+    <table id="variant_table" class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 200px" scope="col">Gene</th>
+                <th style="width: 200px" scope="col">Protein</th>
+                <th style="width: 200px" scope="col">Coding</th>
+                <th style="width: 360px" scope="col">Genomic</th>
+                <th style="width: 300px" scope="col">VarID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ gene.name }}</td>
+                <td>{{ protein_variant}}</td>
+                <td>c.{{ gene.variant_position }} {{ gene.wt_allele }}/{{ gene.mt_allele }}</td>
+                <td>{{ genomic_variant }}</td>
+                <td>{{ variant_id }}</td>
+                <td style="border: none"><a role="button" href="https://gnomad.broadinstitute.org/variant/{{variant_id}}?dataset=gnomad_r2_1" class="btn btn-dark" target="_blank">gnomAD</a></td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
