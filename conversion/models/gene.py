@@ -169,6 +169,8 @@ class Gene(models.Model):
                     mut_codon_list.append(mt_codon)
         return mut_codon_list
 
+    def coding_variant(self):
+        return f"c.{self.variant_position} {self.wt_allele}\{self.mt_allele}"
 
     def coding_variants(self, wt_aa, aa_location, mt_aa):
         """
