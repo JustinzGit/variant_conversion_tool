@@ -99,6 +99,9 @@ def coding(request):
 
         # Obtain genomic variant
         genomic_variant = Ensemble.get_genomic_info(gene.name, gene.variant_position)
+
+        # Obtain variant id
+        variant_id = self.variant_id(genomic_variant)
         
         return render(request, "conversion/coding.html")
 
