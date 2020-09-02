@@ -260,7 +260,7 @@ class Gene(models.Model):
         return switch.get(nucleotide,"")
 
     def variant_id(self, genomic_variant):
-        split_variant = e.split(':|/| |Chr', genomic_variant)
+        split_variant = re.split(':|/| |Chr', genomic_variant)
         return f"{split_variant[2]}-{split_variant[3]}-{split_variant[4]}-{split_variant[5]}"
 
     def variant_ids(self, genomic_variants, coding_variants):
