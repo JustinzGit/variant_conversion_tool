@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+import re
 
 def index(request):
     return render(request, "conversion/index.html", {
@@ -100,6 +101,9 @@ def coding(request):
         # Obtain genomic variant
         genomic_variant = gene.genomic_variant()
 
+        chromosome = re.split(':|/| |Chr', genomic_variant)[2]
+        gdna_start = re.split(':|/| |Chr', genomic_variant)[3]
+
         # Obtain variant id
         variant_id = gene.variant_id(genomic_variant)
 
@@ -121,7 +125,9 @@ def coding(request):
             "gene": gene,
             "genomic_variant": genomic_variant,
             "variant_id": variant_id,
-            "protein_variant": protein_variant
+            "protein_variant": protein_variant,
+            "chromosome": chromosome,
+            "gdna_start": gdna_start
         })
 
     return render(request, "conversion/index.html")
