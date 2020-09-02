@@ -118,6 +118,7 @@ def coding(request):
         mt_aa_info = Gene.get_aa_info(gene.mt_allele)
         
         return render(request, "conversion/coding.html", {
+            "gene": gene,
             "genomic_variant": genomic_variant,
             "variant_id": variant_id,
             "protein_variant": protein_variant
