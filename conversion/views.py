@@ -116,10 +116,17 @@ def coding(request):
 
         # Obtain protein variant
         protein_variant = gene.protein_variant(wt_codon, mt_codon)
+        split_protein_variant = protein_variant.split(".")[1]
+        wt_aa = split_protein_variant[0]
+        mt_aa = split_protein_variant[-1]
 
         # Gather amino acid properties 
-        wt_aa_info = Gene.get_aa_info(gene.wt_allele)
-        mt_aa_info = Gene.get_aa_info(gene.mt_allele)
+        wt_aa_info = Gene.get_aa_info(wt_aa)
+        mt_aa_info = Gene.get_aa_info(mt_aa)
+
+        # Store amino acid information in list
+        wt_aa_info = [wt_codon, wt_aa, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
+        mt_aa_info = [mt_codon, mt_aa, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
         
         return render(request, "conversion/coding.html", {
             "gene": gene,
@@ -127,7 +134,9 @@ def coding(request):
             "variant_id": variant_id,
             "protein_variant": protein_variant,
             "chromosome": chromosome,
-            "gdna_start": gdna_start
+            "gdna_start": gdna_start,
+            "wt_aa_info": wt_aa_info,
+            "mt_aa_info": mt_aa_info
         })
 
     return render(request, "conversion/index.html")
