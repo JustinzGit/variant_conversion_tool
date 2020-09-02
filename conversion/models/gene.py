@@ -122,9 +122,9 @@ class Gene(models.Model):
         """
         Returns MT Codon
         """
-        mt_codon = wt_codon.copy()
-        mt_codon[(variant_position - 1) % 3] = mt_nt
-        return mt_codon   
+        mt_codon = list(wt_codon)
+        mt_codon[(int(variant_position) - 1) % 3] = mt_nt
+        return "".join(mt_codon)  
 
     @classmethod
     def mutant_codon_list(cls, wt_codon, mt_aa):
