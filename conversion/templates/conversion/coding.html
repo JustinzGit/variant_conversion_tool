@@ -18,7 +18,6 @@
                 <td>c.{{ gene.variant_position }} {{ gene.wt_allele }}/{{ gene.mt_allele }}</td>
                 <td>{{ genomic_variant }}</td>
                 <td>{{ variant_id }}</td>
-                <td style="border: none"><a role="button" href="https://gnomad.broadinstitute.org/variant/{{variant_id}}?dataset=gnomad_r2_1" class="btn btn-dark" target="_blank">gnomAD</a></td>
             </tr>
         </tbody>
     </table>
@@ -26,6 +25,10 @@
     <div id="buttons">
         <div id="browser_button">
           <a role="button" href="https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={{chromosome}}%3A{{gdna_start}}" class="btn btn-success" target="_blank">Genome Browser</a>
+        </div>
+
+        <div id="gnomad_button">
+          <a role="button" href="https://gnomad.broadinstitute.org/variant/{{variant_id}}?dataset=gnomad_r2_1" class="btn btn-dark" target="_blank">gnomAD</a>
         </div>
     </div>
 
