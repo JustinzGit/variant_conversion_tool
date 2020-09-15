@@ -136,7 +136,8 @@ def coding(request):
             "chromosome": chromosome,
             "gdna_start": gdna_start,
             "wt_aa_info": wt_aa_info,
-            "mt_aa_info": mt_aa_info
+            "mt_aa_info": mt_aa_info,
+            "gnomad_data": gnomad_data
         })
 
     return render(request, "conversion/index.html")

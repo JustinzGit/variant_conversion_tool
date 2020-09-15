@@ -70,4 +70,39 @@
           </tr>
         </tbody>
     </table>
+
+    {% for variant_id, data in gnomad_data.items %}
+      {% for data_source, population in data.items %}
+        <h3>{{ variant_id }}-gnomAD-{{ data_source }}</h3>
+        <table id="gnomad_table" class="table" style="width: 850px">
+          <thead class="thead-dark">
+              <th scope="col">Ethnicity</th>
+              <th scope="col">Allele Count</th>
+              <th scope="col">Allele Number</th>
+              <th scope="col">Homozygotes</th>
+              <th scope="col">Allele Frequency</th>
+          </thead>
+          <tbody>
+            {% for key, values in population.items %}
+              {% if key != 'totals' %}
+                <tr>
+                  <td>{{ key }}</td>
+                  <td>{{ values.allele_count }}</td>
+                  <td>{{ values.allele_number }}</td>
+                  <td>{{ values.homozygotes }}</td>
+                  <td>{{ values.allele_freq }}</td>
+                </tr>
+              {% endif %}
+           {% endfor %}
+            <tr>
+              <td><b>TOTAL</b></td>
+              <td>{{ population.totals.allele_count }}</td>
+              <td>{{ population.totals.allele_number }}</td>
+              <td>{{ population.totals.homozygotes }}</td>
+              <td>{{ population.totals.allele_freq }}</td>
+            </tr>
+          </tbody>
+        </table>
+      {% endfor %}
+    {% endfor %}
 {% endblock %}
