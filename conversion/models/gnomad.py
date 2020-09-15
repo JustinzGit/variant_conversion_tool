@@ -58,11 +58,17 @@ class Gnomad(models.Model):
                 gnomad_data[variant_id][source] = {}
 
                 for entry in response["data"]["variant"][source]["populations"]:
+                    
+                    if entry["an"] != 0:
+                        allele_frequency = "{0:.9f}".format(float(entry["ac"] / entry["an"]))
+                    else:
+                        allele_frequency = 0
+                    
                     gnomad_data[variant_id][source][entry["id"]] = {
                         "allele_count": entry["ac"],
                         "allele_number": entry["an"],
                         "homozygotes": entry["ac_hom"],
-                        "allele_freq": "{0:.9f}".format(float(entry["ac"] / entry["an"]))
+                        "allele_freq": allele_frequency
                     }
 
                 switch = {
