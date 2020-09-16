@@ -1,17 +1,6 @@
-.grid-container {
-    padding-top: 50px;
-    display: grid;
-    grid-template-columns: 400px auto;
-}
-
-.grid-item {
-    padding: 60px;
-  }
-
 /*Gene name input*/
 #gene_name {
     width: 100px;
-    margin-bottom: 20px;
 }
 
 /* cDNA text box */
@@ -19,14 +8,24 @@
     width: 200px;
 } 
 
+.col-md-4 {
+    padding-left: 5%;
+    padding-top: 50px;
+}
+
+.col-md-8 {
+    padding-top: 50px;
+}
+
+
+/*Protein variant div*/
+#aa_input{
+    width: 400px;
+}
+
 /* Amino acid inputs */
 #wt_aa, #mt_aa {
     width: 61px;
-}
-
-/*AA input div*/
-#aa_input{
-    width: 400px;
 }
 
 /*Selections for aa input*/
@@ -43,38 +42,60 @@
     margin-left: 44px;
 }
 
+
+
+
+
+
+
 /*NT input div*/
 #nt_input {
     width: 400px;
     margin-left: 8px;
 }
 
-#nt_input > select {
+/* #nt_input > select {
     width: 50px;
-}
+} */
 
 /*Selections for nt input*/
 #nt_input, #wt_nt, #nt_location, #mt_nt{
     float: left;
     overflow: hidden;
-    padding-top: 20px;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 
 /*Button to submit form*/
-#protein_button{
+#protein_button {
     width: 200px;
-    margin-left: 35px;
+    margin-left: 44px;
     padding-bottom: 40px;
 }
+
 
 ::-webkit-input-placeholder {
     text-align: center;
   }
 
+
 #variant_table, #aa_table{
-    width: 850px;
+    width: 900px;
 }
+
+#aa_table {
+    margin-top: 20px;
+}
+
+#aa_table tr > th {
+    background-color: #f2f2f2;
+}
+
+#aa_table tr > td {
+    height: 27px;
+    border-bottom: 1px solid #ddd;
+}
+
 
 #gnomad_table, #variant_table, #aa_table th, td{
     text-align: center;
