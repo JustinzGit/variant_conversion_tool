@@ -54,27 +54,27 @@ class Gene(models.Model):
     }
 
     aa_info = [
-        ['M', 'Methionine', 'Met', 'Non-Polar, Sulfur-Containing', 'Essential'],
-        ['C', 'Cysteine', 'Cys', 'Non-Polar, Sulfur-Containing', 'Non-Essential'],
-        ['W', 'Tryptophan', 'Trp', 'Non-Polar, Aromatic', 'Essential'],
-        ['F', 'Phenylalanine', 'Phe', 'Non-Polar, Aromatic', 'Essential'],
-        ['I', 'Isoleucine', 'Ile', 'Non-Polar, Aliphatic', 'Essential'],
-        ['G', 'Glycine', 'Gly', 'Non-Polar, Aliphatic', 'Non-Essential'],
-        ['V', 'Valine', 'Val', 'Non-Polar, Aliphatic', 'Essential'],
         ['A', 'Alanine', 'Ala', 'Non-Polar, Aliphatic', 'Non-Essential'],
-        ['P', 'Proline', 'Pro', 'Non-Polar, Aliphatic', 'Non-Essential'],
-        ['L', 'Leucine', 'Leu', 'Non-Polar, Aliphatic', 'Essential'],
         ['N', 'Asparagine', 'Asn', 'Polar, Amidic', 'Non-Essential'],
-        ['Q', 'Glutamine', 'Gln', 'Polar, Amidic', 'Non-Essential'],
-        ['Y', 'Tyrosine', 'Tyr', 'Polar, Aromatic', 'Non-Essential'],
-        ['T', 'Threonine', 'Thr', 'Polar, Hydroxylic', 'Essential'],
-        ['S', 'Serine', 'Ser', 'Polar, Hydroxylic', 'Non-Essential'],
-        ['K', 'Lysine', 'Lys', 'Positively-Charged, Basic', 'Essential'],
-        ['H', 'Histidine', 'His', 'Positively-Charged, Basic', 'Essential'],
         ['R', 'Arginine', 'Arg', 'Positively-Charged, Basic', 'Non-Essential'],
         ['D', 'Aspartic Acid', 'Asp', 'Negatively-Charged, Acidic', 'Non-Essential'],
-        ['E', 'Glutamic Acid', 'Glu', 'Negatively-Charged, Acidic', 'Non-Essential']
-        ]
+        ['C', 'Cysteine', 'Cys', 'Non-Polar, Sulfur-Containing', 'Non-Essential'],
+        ['E', 'Glutamic Acid', 'Glu', 'Negatively-Charged, Acidic', 'Non-Essential'],
+        ['Q', 'Glutamine', 'Gln', 'Polar, Amidic', 'Non-Essential'],
+        ['G', 'Glycine', 'Gly', 'Non-Polar, Aliphatic', 'Non-Essential'],
+        ['H', 'Histidine', 'His', 'Positively-Charged, Basic', 'Essential'],
+        ['I', 'Isoleucine', 'Ile', 'Non-Polar, Aliphatic', 'Essential'],
+        ['L', 'Leucine', 'Leu', 'Non-Polar, Aliphatic', 'Essential'],
+        ['K', 'Lysine', 'Lys', 'Positively-Charged, Basic', 'Essential'],
+        ['M', 'Methionine', 'Met', 'Non-Polar, Sulfur-Containing', 'Essential'],
+        ['F', 'Phenylalanine', 'Phe', 'Non-Polar, Aromatic', 'Essential'],
+        ['P', 'Proline', 'Pro', 'Non-Polar, Aliphatic', 'Non-Essential'],
+        ['S', 'Serine', 'Ser', 'Polar, Hydroxylic', 'Non-Essential'],
+        ['T', 'Threonine', 'Thr', 'Polar, Hydroxylic', 'Essential'],
+        ['Y', 'Tyrosine', 'Tyr', 'Polar, Aromatic', 'Non-Essential'],
+        ['W', 'Tryptophan', 'Trp', 'Non-Polar, Aromatic', 'Essential'],
+        ['V', 'Valine', 'Val', 'Non-Polar, Aliphatic', 'Essential']
+    ]
     
     def protein_variant(self, wt_codon, mt_codon):
         codon_position = int((int(self.variant_position) - 1) / 3)
