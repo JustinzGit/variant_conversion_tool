@@ -65,6 +65,7 @@ def protein(request):
         return render(request, "conversion/protein.html", {
                     "gene": gene,
                     "variants": variants,
+                    "var_ids": var_ids,
                     "gnomad_data": gnomad_data,
                     "chromosome": genomic_variants[0]['chromosome'],
                     "gdna_start": genomic_variants[0]['gdna_start'],
