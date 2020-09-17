@@ -141,6 +141,16 @@ def coding(request):
             mt_allele = request.POST["mt_nt"]
         )
 
+         # Obtain wt and mt codon
+        try:
+            wt_codon = gene.wt_codon("coding")
+            mt_codon = gene.mt_codon(gene.variant_position, wt_codon, gene.mt_allele)
+        except IndexError:
+             return render(request, "conversion/index.html", {
+                "alert": "Variant position is out of range",
+                 "aa_table": Gene.aa_info
+            })
+        
         # Obtain genomic variant
         genomic_variant = gene.genomic_variant()
 
@@ -152,10 +162,6 @@ def coding(request):
 
         # Obtain data from gnomad
         gnomad_data = Gnomad.gnomad_data(variant_id)
-
-        # Obtain wt and mt codon
-        wt_codon = gene.wt_codon("coding")
-        mt_codon = gene.mt_codon(gene.variant_position, wt_codon, gene.mt_allele)
 
         # Obtain protein variant
         protein_variant = gene.protein_variant(wt_codon, mt_codon)
