@@ -1,0 +1,78 @@
+<table id="wt_info" class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">WT Codon</th>
+        <th scope="col">WT Amino Acid</th>
+        <th scope="col">Name</th>
+        <th scope="col">3 Letter Code</th>
+        <th scope="col">Properties</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ wt_aa_info.0 }}</td>
+        <td>{{ wt_aa_info.1 }}</td>
+        <td>{{ wt_aa_info.2 }}</td>
+        <td>{{ wt_aa_info.3 }}</td>
+        <td>{{ wt_aa_info.4 }}</td>
+      </tr>
+    </tbody>
+</table>
+
+<table id="mt_info" class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">MT Codon</th>
+        <th scope="col">MT Amino Acid</th>
+        <th scope="col">Name</th>
+        <th scope="col">3 Letter Code</th>
+        <th scope="col">Properties</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ mt_aa_info.0 }}</td>
+        <td>{{ mt_aa_info.1 }}</td>
+        <td>{{ mt_aa_info.2 }}</td>
+        <td>{{ mt_aa_info.3 }}</td>
+        <td>{{ mt_aa_info.4 }}</td>
+      </tr>
+    </tbody>
+</table>
+
+{% for variant_id, data in gnomad_data.items %}
+  {% for data_source, population in data.items %}
+    <table id="gnomad_table" class="table">
+      <thead class="thead-dark">
+          <tr>
+            <th colspan="5"><h4>{{ variant_id }}-gnomAD-{{ data_source }}</h4></th>
+          </tr>
+          <th scope="col">Ethnicity</th>
+          <th scope="col">Allele Count</th>
+          <th scope="col">Allele Number</th>
+          <th scope="col">Homozygotes</th>
+          <th scope="col">Allele Frequency</th>
+      </thead>
+      <tbody>
+        {% for key, values in population.items %}
+          {% if key != 'totals' %}
+            <tr>
+              <td>{{ key }}</td>
+              <td>{{ values.allele_count }}</td>
+              <td>{{ values.allele_number }}</td>
+              <td>{{ values.homozygotes }}</td>
+              <td>{{ values.allele_freq }}</td>
+            </tr>
+          {% endif %}
+       {% endfor %}
+        <tr>
+          <td><b>TOTAL</b></td>
+          <td>{{ population.totals.allele_count }}</td>
+          <td>{{ population.totals.allele_number }}</td>
+          <td>{{ population.totals.homozygotes }}</td>
+          <td>{{ population.totals.allele_freq }}</td>
+        </tr>
+      </tbody>
+    </table>
+  {% endfor %}
+{% endfor %}
