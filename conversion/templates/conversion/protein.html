@@ -7,104 +7,35 @@
                 <th style="width: 200px" scope="col">Gene</th>
                 <th style="width: 200px" scope="col">Protein</th>
                 <th style="width: 200px" scope="col">Coding</th>
-                <th style="width: 360px" scope="col">Genomic</th>
+                <th style="width: 380px" scope="col">Genomic</th>
                 <th style="width: 300px" scope="col">VarID</th>
             </tr>
         </thead>
         <tbody>
         {% for coding, genomic, variant_id in variants %}
-            <tr>
-                <td>{{ gene.name }}</td>
-                <td>p.{{ gene.wt_allele }}{{ gene.variant_position }}{{ gene.mt_allele }}</td>
-                <td>c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
-                <td>{{ genomic.assembly }} Chr{{genomic.chromosome }}:{{genomic.gdna_start }} {{ coding.1 }}/{{ coding.2}}</td>
-                <td>{{ variant_id }}</td>
-                <td style="border: none"><a role="button" href="https://gnomad.broadinstitute.org/variant/{{variant_id}}?dataset=gnomad_r2_1" class="btn btn-dark" target="_blank">gnomAD</a></td>
-            </tr>
+          <tr>
+            <td>{{ gene.name }}</td>
+            <td>p.{{ gene.wt_allele }}{{ gene.variant_position }}{{ gene.mt_allele }}</td>
+            <td>c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
+            <td>{{ genomic.assembly }} Chr{{genomic.chromosome }}:{{genomic.gdna_start }} {{ coding.1 }}/{{ coding.2}}</td>
+            <td>{{ variant_id }}</td>
+
+            {% if var_ids|length > 1 %}
+              <td style="border: none"><a role="button" href="https://gnomad.broadinstitute.org/variant/{{variant_id}}?dataset=gnomad_r2_1" class="btn btn-dark" target="_blank">gnomAD</a></td>
+            {% else %}
+              <td style="border: none; padding-left: 100px;"></td>
+            {% endif %}
+            
+          </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <div id="buttons">
-      <div id="browser_button">
-        <a role="button" href="https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={{chromosome}}%3A{{gdna_start}}" class="btn btn-success" target="_blank">Genome Browser</a>
-      </div>
-    </div>
+    <a id="browser_button" role="button" href="https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position={{chromosome}}%3A{{gdna_start}}" class="btn btn-success" target="_blank">Genome Browser</a>
 
-    <table style="margin-top: 100px" id="aa_table" class="table">
-        <thead class="thead-light">
-          <tr>
-            <th style="width: 200px" scope="col">WT Codon</th>
-            <th style="width: 200px" scope="col">WT Amino Acid</th>
-            <th style="width: 200px" scope="col">Name</th>
-            <th style="width: 200px" scope="col">3 Letter Code</th>
-            <th style="width: 200px" scope="col">Properties</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ wt_aa_info.0 }}</td>
-            <td>{{ wt_aa_info.1 }}</td>
-            <td>{{ wt_aa_info.2 }}</td>
-            <td>{{ wt_aa_info.3 }}</td>
-            <td>{{ wt_aa_info.4 }}</td>
-          </tr>
-        </tbody>
-    </table>
+    {% if var_ids|length == 1 %}
+      <a id="gnomad_button" role="button" href="https://gnomad.broadinstitute.org/variant/{{var_ids.0}}?dataset=gnomad_r2_1" class="btn btn-dark" target="_blank">gnomAD</a>
+    {% endif %}
 
-    <table id="aa_table" class="table">
-        <thead class="thead-light">
-          <tr>
-            <th style="width: 200px" scope="col">MT Codon</th>
-            <th style="width: 200px" scope="col">MT Amino Acid</th>
-            <th style="width: 200px" scope="col">Name</th>
-            <th style="width: 200px" scope="col">3 Letter Code</th>
-            <th style="width: 200px" scope="col">Properties</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ mt_aa_info.0 }}</td>
-            <td>{{ mt_aa_info.1 }}</td>
-            <td>{{ mt_aa_info.2 }}</td>
-            <td>{{ mt_aa_info.3 }}</td>
-            <td>{{ mt_aa_info.4 }}</td>
-          </tr>
-        </tbody>
-    </table>
-    
-    {% for variant_id, data in gnomad_data.items %}
-      {% for data_source, population in data.items %}
-        <h3>{{ variant_id }}-gnomAD-{{ data_source }}</h3>
-        <table id="gnomad_table" class="table" style="width: 850px">
-          <thead class="thead-dark">
-              <th scope="col">Ethnicity</th>
-              <th scope="col">Allele Count</th>
-              <th scope="col">Allele Number</th>
-              <th scope="col">Homozygotes</th>
-              <th scope="col">Allele Frequency</th>
-          </thead>
-          <tbody>
-            {% for key, values in population.items %}
-              {% if key != 'totals' %}
-                <tr>
-                  <td>{{ key }}</td>
-                  <td>{{ values.allele_count }}</td>
-                  <td>{{ values.allele_number }}</td>
-                  <td>{{ values.homozygotes }}</td>
-                  <td>{{ values.allele_freq }}</td>
-                </tr>
-              {% endif %}
-           {% endfor %}
-            <tr>
-              <td><b>TOTAL</b></td>
-              <td>{{ population.totals.allele_count }}</td>
-              <td>{{ population.totals.allele_number }}</td>
-              <td>{{ population.totals.homozygotes }}</td>
-              <td>{{ population.totals.allele_freq }}</td>
-            </tr>
-          </tbody>
-        </table>
-      {% endfor %}
-    {% endfor %}
+    {% include "conversion/tables.html" %}
 {% endblock %}
