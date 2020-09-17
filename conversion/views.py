@@ -44,7 +44,13 @@ def protein(request):
         )
 
         # Obtain list of coding variants 
-        coding_variants = gene.coding_variants(gene.wt_allele, gene.variant_position, gene.mt_allele)
+        try:
+            coding_variants = gene.coding_variants(gene.wt_allele, gene.variant_position, gene.mt_allele)
+        except IndexError:
+             return render(request, "conversion/index.html", {
+                "alert": "Variant Position Is Out Of Range",
+                 "aa_table": Gene.aa_info
+            })
 
         # Obtain list of genomic variants
         genomic_variants = gene.genomic_variants()
