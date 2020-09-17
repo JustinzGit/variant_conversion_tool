@@ -48,9 +48,26 @@ def protein(request):
             coding_variants = gene.coding_variants(gene.wt_allele, gene.variant_position, gene.mt_allele)
         except IndexError:
              return render(request, "conversion/index.html", {
-                "alert": "Variant Position Is Out Of Range",
+                "alert": "Variant position is out of range",
                  "aa_table": Gene.aa_info
             })
+
+        # Obtain wt and mt codons
+        wt_codon = gene.wt_codon("protein")
+        if wt_codon not in Gene.aa_table[gene.wt_allele]:
+             return render(request, "conversion/index.html", {
+                "alert": f"Amino acid '{gene.wt_allele}' is not located at position {gene.variant_position}",
+                 "aa_table": Gene.aa_info
+            })
+        
+        mt_codon_list = Gene.mutant_codon_list(wt_codon, gene.mt_allele)
+        if len(mt_codon_list) == 0:
+            return render(request, "conversion/index.html", {
+                "alert": f"The WT codon '{wt_codon}' that encodes the amino acid '{gene.wt_allele}' within your sequence cannot produe the amino acid '{gene.mt_allele}' via a single nucleotide change",
+                "aa_table": Gene.aa_info
+            })
+        
+        mt_codons = ", ".join(mt_codon_list)
 
         # Obtain list of genomic variants
         genomic_variants = gene.genomic_variants()
@@ -66,16 +83,6 @@ def protein(request):
             
         # Zip variant lists to iterate over together in html
         variants = zip(coding_variants, genomic_variants, var_ids)
-
-        # Obtain wt and mt codons
-        wt_codon = gene.wt_codon("protein")
-        if wt_codon not in Gene.aa_table[gene.wt_allele]:
-             return render(request, "conversion/index.html", {
-                "alert": f"Amino acid {gene.wt_allele} is not located at position {gene.variant_position}",
-                 "aa_table": Gene.aa_info
-            })
-
-        mt_codons = ", ".join(Gene.mutant_codon_list(wt_codon, gene.mt_allele))
 
         # Gather amino acid properties 
         wt_aa_info = Gene.get_aa_info(gene.wt_allele)
@@ -98,7 +105,7 @@ def protein(request):
 
     elif request.method == "GET":
          return render(request, "conversion/index.html", {
-                "alert": "A Variant Submission Is Required",
+                "alert": "A variant submission is required",
                  "aa_table": Gene.aa_info
             })
 
