@@ -31,7 +31,7 @@ def protein(request):
 
         if not wt_allele.strip() or not variant_position.strip() or not mt_allele.strip():
              return render(request, "conversion/index.html", {
-                "alert": "Improper Protein Variant Submission: Be Sure To Fill Out All Fields",
+                "alert": "Improper protein variant submission. Be sure to fill out all fields.",
                  "aa_table": Gene.aa_info
             })
 
@@ -125,11 +125,19 @@ def coding(request):
                 "alert": "A cDNA submission is required",
             })
 
+    
+        variant_position = request.POST["nt_location"]
+        if not variant_position.strip():
+             return render(request, "conversion/index.html", {
+                "alert": "Improper coding variant submission. Be sure to include the variants coding position.",
+                 "aa_table": Gene.aa_info
+            })
+
         gene = Gene(
             name = request.POST["gene_name"],
             cdna_seq = cdna_seq,
             wt_allele = request.POST["wt_nt"],
-            variant_position = request.POST["nt_location"],
+            variant_position = variant_position,
             mt_allele = request.POST["mt_nt"]
         )
 
