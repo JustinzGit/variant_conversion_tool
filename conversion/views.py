@@ -141,7 +141,14 @@ def coding(request):
             mt_allele = request.POST["mt_nt"]
         )
 
-         # Obtain wt and mt codon
+        cdna_list = list(gene.cdna_seq)
+        if cdna_list[(int(gene.variant_position) - 1)] != gene.wt_allele:
+             return render(request, "conversion/index.html", {
+                "alert": f"The WT nucleotide '{gene.wt_allele}' does not exist at position '{gene.variant_position}'",
+                 "aa_table": Gene.aa_info
+            })
+
+        # Obtain wt and mt codon
         try:
             wt_codon = gene.wt_codon("coding")
             mt_codon = gene.mt_codon(gene.variant_position, wt_codon, gene.mt_allele)
