@@ -22,6 +22,7 @@ def protein(request):
         else:
             return render(request, "conversion/index.html", {
                 "alert": "A cDNA submission is required",
+                 "aa_table": Gene.aa_info
             })
 
         gene = Gene(
