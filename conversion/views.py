@@ -25,12 +25,22 @@ def protein(request):
                  "aa_table": Gene.aa_info
             })
 
+        wt_allele = request.POST["wt_aa"]
+        variant_position = request.POST["aa_location"]
+        mt_allele = request.POST["mt_aa"]
+
+        if not wt_allele.strip() or not variant_position.strip() or not mt_allele.strip():
+             return render(request, "conversion/index.html", {
+                "alert": "Improper Protein Variant Submission: Be Sure To Include All Fields",
+                 "aa_table": Gene.aa_info
+            })
+
         gene = Gene(
             name = request.POST["gene_name"],
             cdna_seq = cdna_seq,
-            wt_allele = request.POST["wt_aa"],
-            variant_position = request.POST["aa_location"],
-            mt_allele = request.POST["mt_aa"]
+            wt_allele = wt_allele,
+            variant_position = variant_position,
+            mt_allele = mt_allele
         )
 
         # Obtain list of coding variants 
