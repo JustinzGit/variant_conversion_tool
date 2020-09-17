@@ -113,10 +113,6 @@ div.alert {
     width: 790px;
 }
 
-#wt_info #mt_info tr > th {
-    width: 200px;
-}
-
 #mt_info, #gnomad_table {
     text-align: center;
     width: 790px;
