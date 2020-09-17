@@ -54,26 +54,26 @@ class Gene(models.Model):
     }
 
     aa_info = [
-        ['A', 'Alanine', 'Ala', 'Non-Polar, Aliphatic', 'Non-Essential'],
-        ['N', 'Asparagine', 'Asn', 'Polar, Amidic', 'Non-Essential'],
-        ['R', 'Arginine', 'Arg', 'Positively-Charged, Basic', 'Non-Essential'],
-        ['D', 'Aspartic Acid', 'Asp', 'Negatively-Charged, Acidic', 'Non-Essential'],
-        ['C', 'Cysteine', 'Cys', 'Non-Polar, Sulfur-Containing', 'Non-Essential'],
-        ['E', 'Glutamic Acid', 'Glu', 'Negatively-Charged, Acidic', 'Non-Essential'],
-        ['Q', 'Glutamine', 'Gln', 'Polar, Amidic', 'Non-Essential'],
-        ['G', 'Glycine', 'Gly', 'Non-Polar, Aliphatic', 'Non-Essential'],
-        ['H', 'Histidine', 'His', 'Positively-Charged, Basic', 'Essential'],
-        ['I', 'Isoleucine', 'Ile', 'Non-Polar, Aliphatic', 'Essential'],
-        ['L', 'Leucine', 'Leu', 'Non-Polar, Aliphatic', 'Essential'],
-        ['K', 'Lysine', 'Lys', 'Positively-Charged, Basic', 'Essential'],
-        ['M', 'Methionine', 'Met', 'Non-Polar, Sulfur-Containing', 'Essential'],
-        ['F', 'Phenylalanine', 'Phe', 'Non-Polar, Aromatic', 'Essential'],
-        ['P', 'Proline', 'Pro', 'Non-Polar, Aliphatic', 'Non-Essential'],
-        ['S', 'Serine', 'Ser', 'Polar, Hydroxylic', 'Non-Essential'],
-        ['T', 'Threonine', 'Thr', 'Polar, Hydroxylic', 'Essential'],
-        ['Y', 'Tyrosine', 'Tyr', 'Polar, Aromatic', 'Non-Essential'],
-        ['W', 'Tryptophan', 'Trp', 'Non-Polar, Aromatic', 'Essential'],
-        ['V', 'Valine', 'Val', 'Non-Polar, Aliphatic', 'Essential']
+        ['A', 'Alanine', 'Ala', 'Non-Polar, Aliphatic'],
+        ['N', 'Asparagine', 'Asn', 'Polar, Amidic'],
+        ['R', 'Arginine', 'Arg', 'Positively-Charged, Basic'],
+        ['D', 'Aspartic Acid', 'Asp', 'Negatively-Charged, Acidic'],
+        ['C', 'Cysteine', 'Cys', 'Non-Polar, Sulfur-Containing'],
+        ['E', 'Glutamic Acid', 'Glu', 'Negatively-Charged, Acidic'],
+        ['Q', 'Glutamine', 'Gln', 'Polar, Amidic'],
+        ['G', 'Glycine', 'Gly', 'Non-Polar, Aliphatic'],
+        ['H', 'Histidine', 'His', 'Positively-Charged, Basic'],
+        ['I', 'Isoleucine', 'Ile', 'Non-Polar, Aliphatic'],
+        ['L', 'Leucine', 'Leu', 'Non-Polar, Aliphatic'],
+        ['K', 'Lysine', 'Lys', 'Positively-Charged, Basic'],
+        ['M', 'Methionine', 'Met', 'Non-Polar, Sulfur-Containing'],
+        ['F', 'Phenylalanine', 'Phe', 'Non-Polar, Aromatic'],
+        ['P', 'Proline', 'Pro', 'Non-Polar, Aliphatic'],
+        ['S', 'Serine', 'Ser', 'Polar, Hydroxylic'],
+        ['T', 'Threonine', 'Thr', 'Polar, Hydroxylic'],
+        ['Y', 'Tyrosine', 'Tyr', 'Polar, Aromatic'],
+        ['W', 'Tryptophan', 'Trp', 'Non-Polar, Aromatic'],
+        ['V', 'Valine', 'Val', 'Non-Polar, Aliphatic']
     ]
     
     def protein_variant(self, wt_codon, mt_codon):
@@ -86,7 +86,7 @@ class Gene(models.Model):
     def get_aa_info(cls, amino_acid):
         for aa in cls.aa_info:
             if aa[0] == amino_acid:
-                return aa
+                return aa 
 
     def codon_seq(self):
         """
@@ -232,8 +232,6 @@ class Gene(models.Model):
         Returns genomic information for each coding variant
         Returns a nested list [chromosome, gdna_start, assembly, strand] 
         """
-
-        # List to hold genomic variants
         genomic_variants = []
 
         # Obtain list of coding variants
@@ -264,7 +262,6 @@ class Gene(models.Model):
         return f"{split_variant[2]}-{split_variant[3]}-{split_variant[4]}-{split_variant[5]}"
 
     def variant_ids(self, genomic_variants, coding_variants):
-        # List to hold variant IDs
         variant_ids = []
 
         for genomic, coding in zip(genomic_variants, coding_variants):
