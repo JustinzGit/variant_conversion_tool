@@ -21,9 +21,9 @@
         <nav class="navbar navbar-expand fixed-top navbar-dark bg-dark">
             <a class="navbar-brand" style="font-size: 25px" href="{% url 'index' %}">Variant Conversion Tool (VCT) &#129516</a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> -->
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
@@ -32,6 +32,10 @@
             </div>
         </nav>
 
+        {% if alert %}
+            <div class="alert alert-danger" role="alert">{{ alert }}</div>
+        {% endif %}
+    
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4">
