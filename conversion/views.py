@@ -178,11 +178,15 @@ def coding(request):
 
         # Gather amino acid properties 
         wt_aa_info = Gene.get_aa_info(wt_aa)
-        mt_aa_info = Gene.get_aa_info(mt_aa)
 
         # Store amino acid information in list
         wt_aa_info = [wt_codon, wt_aa, wt_aa_info[1], wt_aa_info[2], wt_aa_info[3]]
-        mt_aa_info = [mt_codon, mt_aa, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
+
+        if mt_aa == '_':
+            mt_aa_info = [mt_codon, mt_aa, "_", "_", "Stop Codon"]
+        else:
+            mt_aa_info = Gene.get_aa_info(mt_aa)
+            mt_aa_info = [mt_codon, mt_aa, mt_aa_info[1], mt_aa_info[2], mt_aa_info[3]]
         
         return render(request, "conversion/coding.html", {
             "gene": gene,
