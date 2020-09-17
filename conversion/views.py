@@ -84,7 +84,11 @@ def protein(request):
                     "mt_aa_info": mt_aa_info
                 })
 
-    return render(request, "conversion/index.html")
+    elif request.method == "GET":
+         return render(request, "conversion/index.html", {
+                "alert": "A Variant Submission Is Required",
+                 "aa_table": Gene.aa_info
+            })
 
 def coding(request):
     if request.method == "POST":
@@ -152,4 +156,8 @@ def coding(request):
             "gnomad_data": gnomad_data
         })
 
-    return render(request, "conversion/index.html")
+    elif request.method == "GET":
+         return render(request, "conversion/index.html", {
+                "alert": "A Variant Submission Is Required",
+                 "aa_table": Gene.aa_info
+            })
