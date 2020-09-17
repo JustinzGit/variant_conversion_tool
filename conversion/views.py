@@ -31,7 +31,7 @@ def protein(request):
 
         if not wt_allele.strip() or not variant_position.strip() or not mt_allele.strip():
              return render(request, "conversion/index.html", {
-                "alert": "Improper Protein Variant Submission: Be Sure To Include All Fields",
+                "alert": "Improper Protein Variant Submission: Be Sure To Fill Out All Fields",
                  "aa_table": Gene.aa_info
             })
 
