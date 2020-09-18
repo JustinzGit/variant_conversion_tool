@@ -6,6 +6,10 @@
     padding-left: 5%;
 }
 
+.col-md-8 {
+    min-width: 700px;
+}
+
 div.alert {
     text-align: center;
     position: relative;
