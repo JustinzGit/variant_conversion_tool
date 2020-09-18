@@ -104,6 +104,7 @@ div.alert {
 }
 
 #gnomad_button{
+    position: absolute;
     margin-left: 93px;
 }
 
