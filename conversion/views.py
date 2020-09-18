@@ -63,7 +63,7 @@ def protein(request):
         mt_codon_list = Gene.mutant_codon_list(wt_codon, gene.mt_allele)
         if len(mt_codon_list) == 0:
             return render(request, "conversion/index.html", {
-                "alert": f"The WT codon '{wt_codon}' that encodes the amino acid '{gene.wt_allele}' within your sequence cannot produe the amino acid '{gene.mt_allele}' via a single nucleotide change",
+                "alert": f"The WT codon '{wt_codon}' that encodes '{gene.wt_allele}' within your sequence cannot produe '{gene.mt_allele}' via a single nucleotide change",
                 "aa_table": Gene.aa_info
             })
         
