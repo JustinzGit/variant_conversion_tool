@@ -4,7 +4,8 @@ The VCT is a tool for scientists who wish to easily convert mutation coordinates
 # Installation
 - Clone this repository 
 - Be sure to have [python](https://www.python.org/downloads/) and [django](https://www.djangoproject.com/download/) installed
-- Within the main directory, run `python manage.py runserver` from the terminal
+- Within the main directory, run `python manage.py makemigrations` to create migrations
+- Run `python manage.py migrate` to apply migrations
 - Navigate to `localhost:8000/conversion` within the browser to access the conversion application
 
 # Usage
