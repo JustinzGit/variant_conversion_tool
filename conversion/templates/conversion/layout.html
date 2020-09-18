@@ -41,11 +41,11 @@
                 <div class="col-md-4">
                     <form id="variant_form" enctype="multipart/form-data" method="POST">
                         {% csrf_token %}
-                        <p>Gene Name: <input id="gene_name" type="text" class="form-control form-control-sm" name="gene_name" placeholder="Gene Name" required></p>
+                        <p>Gene Name: <input value="{{gene.name}}" id="gene_name" type="text" class="form-control form-control-sm" name="gene_name" placeholder="Gene Name" required></p>
 
                         <p>cDNA File: <br><input name="cdna_file" type="file"></p>
             
-                        <p>cDNA Text: <textarea id="textbox" class="form-control" name="cdna_text" rows="1.5"></textarea></p>
+                        <p>cDNA Text: <textarea id="textbox" class="form-control" name="cdna_text" rows="1.5">{{gene.cdna_seq}}</textarea></p>
             
                         <div id="aa_input">
             
