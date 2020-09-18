@@ -5,9 +5,9 @@ To obtain a variants genomic coordinate data is collected from Ensembl using the
 
 # Installation
 - Clone this repository 
-- Be sure to have Python3 installed [python](https://www.python.org/downloads/)
-- Be sure to have Django installed [django](https://www.djangoproject.com/download/)
-- Within the main directory, run `python3 manage.py runserver` from the terminal
+- Be sure to have [python](https://www.python.org/downloads/) installed 
+- Be sure to have [django](https://www.djangoproject.com/download/) installed 
+- Within the main directory, run `python manage.py runserver` from the terminal
 - Navigate to `localhost:8000/conversion` within the browser to access the conversion application
 
 # Usage
