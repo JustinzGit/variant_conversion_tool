@@ -1,12 +1,14 @@
 # Variant Conversion Tool (VCT)
 The VCT is a tool for scientists who wish to easily convert mutation coordinates to their respective coding or protein variant. Genomic coordinates (GRCh37/hg19) are also obtained and a link is provided for quick access to the mutation location on the [UCSC Genome Browser](https://genome.ucsc.edu/). Genome and/or exome data from [gnomAd](https://gnomad.broadinstitute.org/) is displayed if the variant is located within the v2.1 (GRCh37/hg19) gnomAD dataset. A link to a variants webpage at gnomAD is also provided to obtain additional information. To obtain a variants genomic coordinate data is collected from Ensembl using the [Ensembl REST API](http://europepmc.org/article/MED/25236461?singleResult=true).
 
+The VCT can be accessed from the web at [https://variant-conversion-tool.herokuapp.com/](https://variant-conversion-tool.herokuapp.com/)
+
 # Installation
 - Clone this repository 
 - Be sure to have [python](https://www.python.org/downloads/) and [django](https://www.djangoproject.com/download/) installed
 - Within the main directory, run `python manage.py makemigrations` to create migrations
 - Run `python manage.py migrate` to apply migrations
-- Navigate to `localhost:8000/conversion` within the browser to access the conversion application
+- Navigate to `localhost:8000` within the browser to access the conversion application
 
 # Usage
 - Provide the official gene name
