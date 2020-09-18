@@ -56,7 +56,7 @@ def protein(request):
         wt_codon = gene.wt_codon("protein")
         if wt_codon not in Gene.aa_table[gene.wt_allele]:
              return render(request, "conversion/index.html", {
-                "alert": f"Amino acid '{gene.wt_allele}' is not located at position {gene.variant_position}",
+                "alert": f"Amino acid '{gene.wt_allele}' is not located at position '{gene.variant_position}'",
                  "aa_table": Gene.aa_info
             })
         
