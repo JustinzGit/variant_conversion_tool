@@ -20,16 +20,6 @@
     <body>
         <nav class="navbar navbar-expand fixed-top navbar-dark bg-dark">
             <a class="navbar-brand" style="font-size: 25px" href="{% url 'index' %}">Variant Conversion Tool (VCT) &#129516</a>
-
-            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
-
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="{% url 'index' %}">Conversion</a>
-                </div>
-            </div>
         </nav>
 
         {% if alert %}
@@ -98,12 +88,10 @@
                     <h3>Variant Conversion Tool (VCT)</h3>
                     <p>The VCT is a tool for scientists who wish to easily convert mutation coordinates to their 
                         respective coding or protein variant.</p>
-                    <!-- <ul>
-                        <li>Annotation tab provides coding and protein coordinate conversions.</li>
-                        <li>Genomic coordinates from assembly hg38 are also determined after form submission.</li>
-                        <li>Nucleotide changes in gnomAD variant ID reflect the genomic change via the positive strand.</li>
-                        <li>gnomAD version 3, mapped to GRCh38, is used to query variants.</li>
-                    </ul> -->
+                    <ul>
+                        <li>Genomic coordinates (GRCh37/hg19) are also determined after form submission.</li>
+                        <li>Data from gnomAD is obtained using the v2.1 dataset (GRCh37/hg19)</li>
+                    </ul>
                 
                     <b>Specifications:</b>
                     <ol>
