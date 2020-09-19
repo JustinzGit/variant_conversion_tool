@@ -8,7 +8,7 @@ The VCT can be accessed from the web at [https://variant-conversion-tool.herokua
 - Be sure to have [python](https://www.python.org/downloads/) and [django](https://www.djangoproject.com/download/) installed
 - Within the main directory, run `python manage.py makemigrations` to create migrations
 - Run `python manage.py migrate` to apply migrations
-- Run `python manage.py runserver` to start up a local server
+- Run `python manage.py runserver` to start up a local web server
 - Navigate to `localhost:8000` within the browser to access the conversion application
 
 # Usage
