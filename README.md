@@ -3,7 +3,7 @@ The VCT is a tool for scientists who wish to easily convert mutation coordinates
 
 Genomic coordinates (GRCh37/hg19) are also obtained and a link is provided for quick access to the variants position on the [UCSC Genome Browser](https://genome.ucsc.edu/). 
 
-Genome and/or exome data from [gnomAd](https://gnomad.broadinstitute.org/) is displayed if the variant is located within the v2.1 (GRCh37/hg19) gnomAD dataset. A link to a variants webpage at gnomAD is also provided to obtain additional information.
+Genome and/or exome data from [gnomAd](https://gnomad.broadinstitute.org/) is displayed if the variant is located within gnomADs dataset v2.1 (GRCh37/hg19). A link to a variants webpage at gnomAD is also provided to obtain additional information.
 
 Data is collected from Ensembl to obtain a variants genomic coordinates using the [Ensembl REST API](http://europepmc.org/article/MED/25236461?singleResult=true).
 
