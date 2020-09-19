@@ -49,7 +49,8 @@ def protein(request):
         except IndexError:
              return render(request, "conversion/index.html", {
                 "alert": "Variant position is out of range",
-                 "aa_table": Gene.aa_info
+                 "aa_table": Gene.aa_info,
+                 "gene": gene
             })
 
         # Obtain wt and mt codons
@@ -57,14 +58,16 @@ def protein(request):
         if wt_codon not in Gene.aa_table[gene.wt_allele]:
              return render(request, "conversion/index.html", {
                 "alert": f"Amino acid '{gene.wt_allele}' is not located at position '{gene.variant_position}'",
-                 "aa_table": Gene.aa_info
+                 "aa_table": Gene.aa_info,
+                 "gene": gene
             })
         
         mt_codon_list = Gene.mutant_codon_list(wt_codon, gene.mt_allele)
         if len(mt_codon_list) == 0:
             return render(request, "conversion/index.html", {
                 "alert": f"The WT codon '{wt_codon}' that encodes '{gene.wt_allele}' within your sequence cannot produe '{gene.mt_allele}' via a single nucleotide change",
-                "aa_table": Gene.aa_info
+                "aa_table": Gene.aa_info,
+                "gene": gene
             })
         
         mt_codons = ", ".join(mt_codon_list)
@@ -145,7 +148,8 @@ def coding(request):
         if cdna_list[(int(gene.variant_position) - 1)] != gene.wt_allele:
              return render(request, "conversion/index.html", {
                 "alert": f"The WT nucleotide '{gene.wt_allele}' does not exist at position '{gene.variant_position}'",
-                 "aa_table": Gene.aa_info
+                 "aa_table": Gene.aa_info,
+                 "gene": gene
             })
 
         # Obtain wt and mt codon
@@ -155,7 +159,8 @@ def coding(request):
         except IndexError:
              return render(request, "conversion/index.html", {
                 "alert": "Variant position is out of range",
-                 "aa_table": Gene.aa_info
+                 "aa_table": Gene.aa_info,
+                 "gene": gene
             })
         
         # Obtain genomic variant
