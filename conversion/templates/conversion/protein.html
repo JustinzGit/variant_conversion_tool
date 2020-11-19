@@ -7,7 +7,7 @@
                 <th style="width: 200px" scope="col">Gene</th>
                 <th style="width: 200px" scope="col">Protein</th>
                 <th style="width: 200px" scope="col">Coding</th>
-                <th style="width: 380px" scope="col">Genomic</th>
+                <th style="width: 400px" scope="col">Genomic</th>
                 <th style="width: 300px" scope="col">VarID</th>
             </tr>
         </thead>
@@ -17,7 +17,7 @@
             <td>{{ gene.name }}</td>
             <td>p.{{ gene.wt_allele }}{{ gene.variant_position }}{{ gene.mt_allele }}</td>
             <td>c.{{ coding.0 }} {{ coding.1 }}/{{ coding.2}}</td>
-            <td>{{ genomic.assembly }} Chr{{genomic.chromosome }}:{{genomic.gdna_start }} {{ coding.1 }}/{{ coding.2}}</td>
+            <td>{{ genomic.assembly }} Chr{{genomic.chromosome }}:{{genomic.gdna_start }} {{ genomic.wt_allele }}/{{ genomic.mt_allele }}</td>
             <td>{{ variant_id }}</td>
 
             {% if var_ids|length > 1 %}
