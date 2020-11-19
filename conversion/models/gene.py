@@ -239,7 +239,20 @@ class Gene(models.Model):
 
         # Obtain genomic variant for each coding variant
         for variant in coding_variants:
-            genomic_variants.append(Ensemble.get_genomic_info(self.name, variant[0]))
+            ensemble_data = Ensemble.get_genomic_info(self.name, variant[0])
+
+            if int(ensemble_data['strand']) < 0:
+                wt_allele = Gene.convert_nucleotide(variant[1])
+                mt_allele = Gene.convert_nucleotide(variant[2])
+            
+            else:
+                wt_allele = variant[1]
+                mt_allele = variant[2]
+            
+            ensemble_data['wt_allele'] = wt_allele
+            ensemble_data['mt_allele'] = mt_allele
+
+            genomic_variants.append(ensemble_data)
         
         return genomic_variants
 
