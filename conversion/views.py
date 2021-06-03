@@ -18,6 +18,8 @@ def protein(request):
         # cDNA seq was submitted through textbox
         elif request.POST["cdna_text"]:
             cdna_seq = request.POST["cdna_text"].upper()
+            cdna_seq = cdna_seq.replace('\n', '')
+            cdna_seq = cdna_seq.replace('\r', '')
 
         else:
             return render(request, "conversion/index.html", {
@@ -122,6 +124,8 @@ def coding(request):
         # cDNA seq was submitted through textbox
         elif request.POST["cdna_text"]:
             cdna_seq = request.POST["cdna_text"].upper()
+            cdna_seq = cdna_seq.replace('\n', '')
+            cdna_seq = cdna_seq.replace('\r', '')
 
         else:
             return render(request, "conversion/index.html", {
